@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Essential Cookings</string>
+    <string name="app_name" translatable="false">kooKings</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
 </resources>

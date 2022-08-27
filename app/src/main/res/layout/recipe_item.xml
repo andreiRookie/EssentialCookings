@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/common_margin"
+    app:cardCornerRadius="@dimen/common_margin"
+    android:layout_margin="@dimen/common_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/orange_100"
+    >
+
+    <ImageView
+        android:id="@+id/recipe_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_recipe_item_48"
+        android:layout_marginStart="@dimen/common_padding"
+        android:layout_marginTop="@dimen/common_padding"
+        android:layout_marginBottom="@dimen/common_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recipe_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+<TextView
+    android:id="@+id/recipe_title"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:singleLine="true"
+    android:text="Recipe Title"
+    android:textStyle="bold"
+    android:textSize="16sp"
+    android:layout_marginStart="@dimen/common_padding"
+    app:layout_constraintTop_toTopOf="@id/recipe_icon"
+    app:layout_constraintBottom_toTopOf="@id/recipe_category"
+    app:layout_constraintStart_toEndOf="@id/recipe_icon"
+    app:layout_constraintEnd_toStartOf="@id/menu_button"
+    android:contentDescription="Recipe title"
+    />
+
+    <TextView
+        android:id="@+id/recipe_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="(category)"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/recipe_title"
+        app:layout_constraintTop_toBottomOf="@id/recipe_title"
+        app:layout_constraintBottom_toTopOf="@id/recipe_author"
+
+        android:contentDescription="Recipe category"
+        />
+
+    <TextView
+        android:id="@+id/recipe_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        android:text="by (Author)"
+        app:layout_constraintTop_toBottomOf="@id/recipe_category"
+        app:layout_constraintStart_toStartOf="@id/recipe_title"
+
+        android:contentDescription="recipe author"
+        app:layout_constraintBottom_toBottomOf="@id/recipe_icon"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="Menu button"
+        app:iconGravity="end"
+        android:outlineProvider="none"
+        app:icon="@drawable/ic_menu_32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recipe_icon"
+        app:layout_constraintStart_toEndOf="@id/recipe_title"
+        app:layout_constraintBottom_toBottomOf="@id/recipe_icon"
+        app:rippleColor="@color/green_200"
+        style="@style/Widget.App.Button.IconOnly"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
