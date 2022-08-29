@@ -14,7 +14,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         id = 0L,
         title = "Всякая вкуснятина",
         author = "Некто",
-        category = "русская кухня"
+        category = "Русская кухня"
     )
 
     var editedRecipe = MutableLiveData(emptyRecipe)

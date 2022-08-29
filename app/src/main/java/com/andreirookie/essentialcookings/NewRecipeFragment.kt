@@ -32,14 +32,14 @@ class NewRecipeFragment : Fragment() {
                 !binding.editAuthor.text.isNullOrBlank()
             ) {
                 val title = binding.editTitle.text.toString()
-                val category = binding.editCategory.text.toString()
                 val author =binding.editAuthor.text.toString()
+                val category = binding.editCategory.text.toString()
 
                 binding.editTitle.setText("")
                 binding.editCategory.setText("")
                 binding.editAuthor.setText("")
 
-                val recipe = Recipe(0L, title, category, author)
+                val recipe = Recipe(id = 0L, title = title, category = category,author = author)
 
                 viewModel.changeAndSaveRecipe(recipe)
             }

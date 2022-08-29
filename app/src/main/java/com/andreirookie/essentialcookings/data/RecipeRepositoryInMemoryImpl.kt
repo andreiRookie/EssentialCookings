@@ -13,8 +13,8 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
             val recipe = Recipe(
                 id = uniqueId + 1L,
                 title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
+                category = "Русская кухня",
                 author = "Андрей",
-                category = "Русская кухня"
             )
             uniqueId++
             recipes += recipe
@@ -39,7 +39,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
             recipes = listOf(
                 recipe.copy(
                     id = ++uniqueId,
-                    title = recipe.title,
+                    title = "${uniqueId}: ${recipe.title}",
                     category = recipe.category,
                     author = recipe.author
                 )
@@ -47,7 +47,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         }
         recipes = recipes.map {
             if (it.id != recipe.id) it else it.copy(
-                title = recipe.title,
+                title = "${uniqueId}: ${recipe.title}",
                 category = recipe.category,
                 author = recipe.author)
         }
