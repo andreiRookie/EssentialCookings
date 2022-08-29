@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.adapter.OnInteractionListener
+import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 import com.andreirookie.essentialcookings.databinding.FragmentFeedBinding
 
@@ -23,7 +24,12 @@ class RecipeFeedFragment : Fragment() {
 
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
-        val adapter = RecipesAdapter(object : OnInteractionListener {})
+        val adapter = RecipesAdapter(object : OnInteractionListener {
+            override fun onRemove(recipe: Recipe) {
+                viewModel.remove(recipeId =recipe.id)
+
+            }
+        })
         binding.recipesRecyclerView.adapter = adapter
 
         binding.addRecipeFab.setOnClickListener {

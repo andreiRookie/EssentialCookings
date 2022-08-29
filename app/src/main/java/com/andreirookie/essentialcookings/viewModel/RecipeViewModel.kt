@@ -45,7 +45,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
 
     // Remove recipe
-
+    fun remove(recipeId: Long) = repository.removeById(recipeId)
 
     // Make recipe Favorite
 

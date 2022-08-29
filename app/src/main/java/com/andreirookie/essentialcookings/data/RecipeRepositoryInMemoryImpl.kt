@@ -31,7 +31,8 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
 
     override fun removeById(recipeId: Long) {
-        TODO("Not yet implemented")
+        recipes = recipes.filter { it.id != recipeId }
+        data.value = recipes
     }
 
     override fun saveRecipe(recipe: Recipe) {
