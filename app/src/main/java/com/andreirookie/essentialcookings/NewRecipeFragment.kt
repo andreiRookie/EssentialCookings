@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBinding
 import com.andreirookie.essentialcookings.util.AppUtils.setCursorAtEndWithFocusAndShowKeyboard
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
@@ -24,7 +26,29 @@ class NewRecipeFragment : Fragment() {
 
         binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
+        binding.floatingButtonSaveRecipe.setOnClickListener {
+            if (!binding.editTitle.text.isNullOrBlank() &&
+                !binding.editCategory.text.isNullOrBlank() &&
+                !binding.editAuthor.text.isNullOrBlank()
+            ) {
+                val title = binding.editTitle.text.toString()
+                val category = binding.editCategory.text.toString()
+                val author =binding.editAuthor.text.toString()
+
+                binding.editTitle.setText("")
+                binding.editCategory.setText("")
+                binding.editAuthor.setText("")
+
+                val recipe = Recipe(0L, title, category, author)
+
+                viewModel.changeAndSaveRecipe(recipe)
+            }
+            findNavController().navigateUp()
+        }
+
 
         return binding.root
     }
+
+    //TODO Draft (via class Draft, Shared prefs??)
 }

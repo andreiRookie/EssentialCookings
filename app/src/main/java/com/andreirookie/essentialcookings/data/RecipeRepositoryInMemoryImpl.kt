@@ -35,7 +35,23 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
 
     override fun saveRecipe(recipe: Recipe) {
-        TODO("Not yet implemented")
+        if (recipe.id == 0L) {
+            recipes = listOf(
+                recipe.copy(
+                    id = ++uniqueId,
+                    title = recipe.title,
+                    category = recipe.category,
+                    author = recipe.author
+                )
+            ) + recipes
+        }
+        recipes = recipes.map {
+            if (it.id != recipe.id) it else it.copy(
+                title = recipe.title,
+                category = recipe.category,
+                author = recipe.author)
+        }
+        data.value = recipes
     }
 
 }
