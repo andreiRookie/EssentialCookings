@@ -10,6 +10,8 @@ import com.andreirookie.essentialcookings.util.SingleLiveEvent
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val repository: RecipeRepository = RecipeRepositoryInMemoryImpl()
+
     private val emptyRecipe = Recipe(
         id = 0L,
         title = "Всякая вкуснятина",
@@ -18,8 +20,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     )
 
     var editedRecipe = MutableLiveData(emptyRecipe)
-
-    private val repository: RecipeRepository = RecipeRepositoryInMemoryImpl()
 
     val data = repository.getAll()
 
@@ -42,6 +42,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     // Edit recipe
+    val navigateToEditRecipeFragEvent = SingleLiveEvent<Recipe>()
+
+    fun edit(recipe: Recipe) {
+        editedRecipe.value = recipe
+    }
+
+    fun editRecipe(recipe: Recipe) {
+        navigateToEditRecipeFragEvent.value = recipe
+    }
 
 
     // Remove recipe

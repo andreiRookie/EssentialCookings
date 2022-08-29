@@ -1,5 +1,6 @@
 package com.andreirookie.essentialcookings.adapter
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -22,8 +23,8 @@ internal class RecipesAdapter(
 
         fun bind(recipe: Recipe) = with(binding) {
             recipeTitle.text = recipe.title
-            recipeAuthor.text = recipe.author
-            recipeCategory.text = recipe.category
+            recipeCategory.text = "(${recipe.category})"
+            recipeAuthor.text = "by ${recipe.author}"
 
 
             menuButton.setOnClickListener {

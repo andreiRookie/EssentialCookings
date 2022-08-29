@@ -1,5 +1,7 @@
 package com.andreirookie.essentialcookings.data
 
+import java.io.Serializable
+
 data class Recipe(
     val id: Long,
     val title: String,
@@ -9,5 +11,5 @@ data class Recipe(
 //    val description: String
 //    val steps: String(array?? json??),
 //    val image: String(uri)
-) {
+)  : Serializable {
 }

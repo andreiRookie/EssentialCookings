@@ -40,7 +40,7 @@
             android:gravity="start|center"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"
-            android:hint="@string/title"
+            android:hint="@string/edit_form_hint_title"
             android:textSize="16sp"/>
     </androidx.cardview.widget.CardView>
 
@@ -64,7 +64,7 @@
             android:gravity="start|center"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"
-            android:hint="@string/category"
+            android:hint="@string/edit_form_hint_category"
             android:textSize="16sp"/>
     </androidx.cardview.widget.CardView>
 
@@ -87,7 +87,7 @@
             android:gravity="start|center"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"
-            android:hint="@string/author"
+            android:hint="@string/edit_form_hint_author"
             android:textSize="16sp"/>
     </androidx.cardview.widget.CardView>
 

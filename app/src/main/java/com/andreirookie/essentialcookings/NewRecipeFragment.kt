@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBinding
 import com.andreirookie.essentialcookings.util.AppUtils.setCursorAtEndWithFocusAndShowKeyboard
+import com.andreirookie.essentialcookings.util.RecipeArg
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 
 class NewRecipeFragment : Fragment() {
@@ -24,6 +25,14 @@ class NewRecipeFragment : Fragment() {
         val binding =  FragmentNewEditRecipeBinding.inflate(inflater,container, false)
 
 
+        arguments?.recipeArg?.let {
+            binding.editTitle.setText(it.title)
+            binding.editCategory.setText(it.category)
+            binding.editAuthor.setText(it.author)
+        }
+        val id = arguments?.recipeArg?.id
+        println("val id =  ${arguments?.recipeArg?.id}")
+
         binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
         binding.floatingButtonSaveRecipe.setOnClickListener {
@@ -35,11 +44,16 @@ class NewRecipeFragment : Fragment() {
                 val author =binding.editAuthor.text.toString()
                 val category = binding.editCategory.text.toString()
 
+
                 binding.editTitle.setText("")
                 binding.editCategory.setText("")
                 binding.editAuthor.setText("")
 
-                val recipe = Recipe(id = 0L, title = title, category = category,author = author)
+                val recipe = Recipe(
+                    id = id ?: 0L,
+                    title = title,
+                    category = category,
+                    author = author)
 
                 viewModel.changeAndSaveRecipe(recipe)
             }
@@ -51,4 +65,9 @@ class NewRecipeFragment : Fragment() {
     }
 
     //TODO Draft (via class Draft, Shared prefs??)
+
+    companion object {
+
+        var Bundle.recipeArg: Recipe by RecipeArg
+    }
 }

@@ -9,7 +9,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     private var recipes = listOf<Recipe>()
     init {
-        repeat(30) {
+        repeat(15) {
             val recipe = Recipe(
                 id = uniqueId + 1L,
                 title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
@@ -48,7 +48,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         }
         recipes = recipes.map {
             if (it.id != recipe.id) it else it.copy(
-                title = "${uniqueId}: ${recipe.title}",
+                title = recipe.title,
                 category = recipe.category,
                 author = recipe.author)
         }

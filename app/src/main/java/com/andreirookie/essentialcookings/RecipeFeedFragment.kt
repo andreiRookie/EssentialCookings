@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.adapter.OnInteractionListener
 import com.andreirookie.essentialcookings.data.Recipe
@@ -29,23 +31,44 @@ class RecipeFeedFragment : Fragment() {
                 viewModel.remove(recipeId =recipe.id)
 
             }
+
+            override fun onEdit(recipe: Recipe) {
+                viewModel.edit(recipe)
+            }
         })
         binding.recipesRecyclerView.adapter = adapter
-
-        binding.addRecipeFab.setOnClickListener {
-            viewModel.addRecipe()
-        }
-
-        viewModel.navigateToNewRecipeFragEvent.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_fragmentFeed_to_fragmentNewEditRecipe)
-        }
-
 
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             println("viewModel.data.observe called")
             adapter.submitList(recipes)
 
         }
+
+        // Add recipe
+        binding.addRecipeFab.setOnClickListener {
+            viewModel.addRecipe()
+        }
+        viewModel.navigateToNewRecipeFragEvent.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_fragmentFeed_to_fragmentNewEditRecipe)
+        }
+
+
+        // Edit recipe
+        viewModel.editedRecipe.observe(viewLifecycleOwner) {
+            if(it.id == 0L) return@observe
+            viewModel.editRecipe(it)
+        }
+        viewModel.navigateToEditRecipeFragEvent.observe(viewLifecycleOwner) {
+
+            val fragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+
+            fragment.navController.navigate(
+                R.id.action_fragmentFeed_to_fragmentNewEditRecipe,
+                Bundle().apply { recipeArg = it }
+            )
+        }
+
 
         return binding.root
 

@@ -5,9 +5,9 @@
     <string name="recipes"><i><b>Recipes</b></i></string>
     <string name="favorite"><i><b>Favorite</b></i></string>
     <string name="filter"><i><b>Filter</b></i></string>
-    <string name="title"><i>Title</i></string>
-    <string name="category"><i>Category</i></string>
-    <string name="author"><i>Author</i></string>
+    <string name="edit_form_hint_title"><i>Title</i></string>
+    <string name="edit_form_hint_category"><i>Category</i></string>
+    <string name="edit_form_hint_author"><i>Author</i></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
