@@ -6,10 +6,30 @@
     app:startDestination="@id/fragmentFeed">
     <fragment
         android:id="@+id/fragmentFeed"
-        android:name="com.andreirookie.essentialcookings.app.RecipeFeedFragment"
+        android:name="com.andreirookie.essentialcookings.RecipeFeedFragment"
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed">
 
+        <action
+            android:id="@+id/action_fragmentFeed_to_fragmentNewEditRecipe"
+            app:destination="@id/fragmentNewEditRecipe" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentRecipeSeparate"
+        android:name="com.andreirookie.essentialcookings.RecipeFragment"
+        android:label="fragment_recipe_separate"
+        tools:layout="@layout/fragment_recipe_separate" />
+    <fragment
+        android:id="@+id/fragmentFilter"
+        android:name="com.andreirookie.essentialcookings.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
+
+    <fragment
+        android:id="@+id/fragmentNewEditRecipe"
+        android:name="com.andreirookie.essentialcookings.NewRecipeFragment"
+        android:label="fragmentNewEditRecipe"
+        tools:layout="@layout/fragment_new_edit_recipe"
+        />
 
 </navigation>

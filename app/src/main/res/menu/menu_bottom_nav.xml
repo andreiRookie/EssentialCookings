@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragmentFeed"
+        android:icon="@drawable/ic_recipes_24"
+        android:title="@string/recipes"
+        />
+    <item
+        android:id="@+id/fragmentFilter"
+        android:icon="@drawable/ic_filter_24"
+        android:title="@string/filter"/>
+    <item
+        android:id="@+id/fragmentFavorite"
+        android:icon="@drawable/ic_favorite_24"
+        android:title="@string/favorite" />
+</menu>

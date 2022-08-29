@@ -1,4 +1,4 @@
-package com.andreirookie.essentialcookings.app.data
+package com.andreirookie.essentialcookings.data
 
 import androidx.lifecycle.LiveData
 
@@ -10,6 +10,6 @@ interface RecipeRepository {
 
     fun removeById(recipeId: Long)
 
-    fun addRecipe(recipe: Recipe)
+    fun saveRecipe(recipe: Recipe)
 
 }

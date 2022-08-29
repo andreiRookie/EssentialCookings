@@ -1,4 +1,4 @@
-package com.andreirookie.essentialcookings.app.adapter
+package com.andreirookie.essentialcookings.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,18 +6,18 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.R
-import com.andreirookie.essentialcookings.app.data.Recipe
+import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.RecipeItemBinding
 
 internal class RecipesAdapter(
-    private val interactionListener: onIneractionListener
+    private val interactionListener: OnInteractionListener
 ): ListAdapter<Recipe, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallBack()) {
 
 
 
     class RecipeViewHolder(
         private val binding: RecipeItemBinding,
-        private val listener: onIneractionListener
+        private val listener: OnInteractionListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(recipe: Recipe) = with(binding) {
@@ -43,7 +43,7 @@ internal class RecipesAdapter(
                             else -> false
                         }
                     }
-                }
+                }.show()
             }
         }
 

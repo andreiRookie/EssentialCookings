@@ -1,4 +1,4 @@
-package com.andreirookie.essentialcookings.app.data
+package com.andreirookie.essentialcookings.data
 
 data class Recipe(
     val id: Long,

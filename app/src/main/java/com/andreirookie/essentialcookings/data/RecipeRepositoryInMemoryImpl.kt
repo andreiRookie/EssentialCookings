@@ -1,4 +1,4 @@
-package com.andreirookie.essentialcookings.app.data
+package com.andreirookie.essentialcookings.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         repeat(30) {
             val recipe = Recipe(
                 id = uniqueId + 1L,
-                title = "блины такие блины сякие, эдакие",
+                title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
                 author = "Андрей",
                 category = "Русская кухня"
             )
@@ -34,7 +34,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         TODO("Not yet implemented")
     }
 
-    override fun addRecipe(recipe: Recipe) {
+    override fun saveRecipe(recipe: Recipe) {
         TODO("Not yet implemented")
     }
 

@@ -1,7 +1,7 @@
-package com.andreirookie.essentialcookings.app.adapter
+package com.andreirookie.essentialcookings.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.andreirookie.essentialcookings.app.data.Recipe
+import com.andreirookie.essentialcookings.data.Recipe
 
 class RecipeDiffCallBack : DiffUtil.ItemCallback<Recipe>() {
     override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {

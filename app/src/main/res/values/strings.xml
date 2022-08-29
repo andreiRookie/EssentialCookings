@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">kooKings</string>
-    <string name="remove">Remove</string>
-    <string name="edit">Edit</string>
+    <string name="remove"><i><b>Remove</b></i></string>
+    <string name="edit"><i><b>Edit</b></i></string>
+    <string name="recipes"><i><b>Recipes</b></i></string>
+    <string name="favorite"><i><b>Favorite</b></i></string>
+    <string name="filter"><i><b>Filter</b></i></string>
+    <string name="title"><i>Title</i></string>
+    <string name="category"><i>Category</i></string>
+    <string name="author"><i>Author</i></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
