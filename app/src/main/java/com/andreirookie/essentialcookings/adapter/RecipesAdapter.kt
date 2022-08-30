@@ -12,7 +12,7 @@ import com.andreirookie.essentialcookings.databinding.RecipeItemBinding
 
 internal class RecipesAdapter(
     private val interactionListener: OnInteractionListener
-): ListAdapter<Recipe, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallBack()) {
+) : ListAdapter<Recipe, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallBack()) {
 
 
 
@@ -60,4 +60,5 @@ internal class RecipesAdapter(
         val recipe = getItem(position)
         holder.bind(recipe)
     }
+
 }

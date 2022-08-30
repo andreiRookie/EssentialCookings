@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
-import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.adapter.OnInteractionListener
+import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.data.Recipe
-import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 import com.andreirookie.essentialcookings.databinding.FragmentFeedBinding
+import com.andreirookie.essentialcookings.dragAndDrop.ItemTouchHelperSimpleCallback
+import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 
 class RecipeFeedFragment : Fragment() {
 
@@ -38,10 +41,12 @@ class RecipeFeedFragment : Fragment() {
         })
         binding.recipesRecyclerView.adapter = adapter
 
+        val itemTouchHelper = ItemTouchHelper(ItemTouchHelperSimpleCallback(viewModel, adapter))
+        itemTouchHelper.attachToRecyclerView(binding.recipesRecyclerView)
+
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             println("viewModel.data.observe called")
             adapter.submitList(recipes)
-
         }
 
         // Add recipe
@@ -73,4 +78,29 @@ class RecipeFeedFragment : Fragment() {
         return binding.root
 
     }
+
+
+    // Drag & drop
+//    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+//        ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), 0
+//    ) {
+//        override fun onMove(
+//            recyclerView: RecyclerView,
+//            viewHolder: RecyclerView.ViewHolder,
+//            target: RecyclerView.ViewHolder
+//        ): Boolean {
+//            var fromPosition = viewHolder.absoluteAdapterPosition
+//            var toPosition = target.absoluteAdapterPosition
+//
+//            viewModel.swap(fromPosition,toPosition)
+//            recyclerView.adapter?.notifyItemMoved(fromPosition,toPosition)
+//            return true
+//        }
+//
+//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//            TODO("Not yet implemented")
+//        }
+//
+//    }
+
 }

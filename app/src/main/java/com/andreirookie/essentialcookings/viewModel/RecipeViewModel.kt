@@ -7,6 +7,7 @@ import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.data.RecipeRepository
 import com.andreirookie.essentialcookings.data.RecipeRepositoryInMemoryImpl
 import com.andreirookie.essentialcookings.util.SingleLiveEvent
+import java.util.*
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -22,6 +23,11 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     var editedRecipe = MutableLiveData(emptyRecipe)
 
     val data = repository.getAll()
+
+    // Drag & drop
+    fun swap(fromPos: Int, toPos: Int) {
+        repository.swap(fromPos, toPos)
+    }
 
 
     // Add Recipe

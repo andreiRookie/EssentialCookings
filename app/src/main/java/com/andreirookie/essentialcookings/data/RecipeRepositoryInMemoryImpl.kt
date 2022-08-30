@@ -2,6 +2,7 @@ package com.andreirookie.essentialcookings.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import java.util.*
 
 class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
@@ -9,7 +10,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     private var recipes = listOf<Recipe>()
     init {
-        repeat(15) {
+        repeat(10) {
             val recipe = Recipe(
                 id = uniqueId + 1L,
                 title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
@@ -21,6 +22,13 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         }
     }
     private val data = MutableLiveData(recipes)
+
+
+    // Drag & drop
+    override fun swap(fromPosition: Int, toPosition: Int) {
+        recipes = recipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+        data.value = recipes
+    }
 
     override fun getAll(): LiveData<List<Recipe>> {
         return data
