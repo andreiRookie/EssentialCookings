@@ -4,4 +4,5 @@
     <dimen name="common_margin">8dp</dimen>
     <dimen name="min_margin">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="icon_button_min_size">32dp</dimen>
 </resources>

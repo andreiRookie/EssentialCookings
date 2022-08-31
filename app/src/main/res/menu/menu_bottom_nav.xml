@@ -9,9 +9,9 @@
     <item
         android:id="@+id/fragmentFilter"
         android:icon="@drawable/ic_filter_24"
-        android:title="@string/filter"/>
+        android:title="@string/filters"/>
     <item
         android:id="@+id/fragmentFavorite"
-        android:icon="@drawable/ic_favorite_24"
-        android:title="@string/favorite" />
+        android:icon="@drawable/ic_favorites_bottom_nav_24"
+        android:title="@string/favorites" />
 </menu>

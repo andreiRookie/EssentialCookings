@@ -35,7 +35,14 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
 
     override fun makeFavoriteById(recipeId: Long) {
-        TODO("Not yet implemented")
+        recipes = recipes.map {
+            if (it.id != recipeId) it else
+                run {
+                    if (it.isFavorite) it.copy(isFavorite = !it.isFavorite)
+                    else it.copy(isFavorite = !it.isFavorite)
+                }
+        }
+        data.value = recipes
     }
 
     override fun removeById(recipeId: Long) {

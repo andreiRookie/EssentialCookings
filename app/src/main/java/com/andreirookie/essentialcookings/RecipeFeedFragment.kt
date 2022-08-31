@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.OnInteractionListener
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
@@ -38,9 +39,19 @@ class RecipeFeedFragment : Fragment() {
             override fun onEdit(recipe: Recipe) {
                 viewModel.edit(recipe)
             }
+
+            override fun onFavorite(recipe: Recipe) {
+                viewModel.favorite(recipe.id)
+            }
         })
+
         binding.recipesRecyclerView.adapter = adapter
 
+        // Prevent recyclerView's Item blinking
+        val simpleItemAnimator = binding.recipesRecyclerView.itemAnimator as SimpleItemAnimator
+        simpleItemAnimator.supportsChangeAnimations = false
+
+        // Drag & drop
         val itemTouchHelper = ItemTouchHelper(ItemTouchHelperSimpleCallback(viewModel, adapter))
         itemTouchHelper.attachToRecyclerView(binding.recipesRecyclerView)
 

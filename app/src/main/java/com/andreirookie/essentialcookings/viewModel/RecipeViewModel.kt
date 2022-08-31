@@ -30,13 +30,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
-    // Add Recipe
+    // Add a Recipe
     val navigateToNewRecipeFragEvent = SingleLiveEvent<Unit>()
     fun addRecipe() {
         navigateToNewRecipeFragEvent.call()
     }
 
-    // Change and save recipe
+    // Change and save a recipe
     fun changeAndSaveRecipe(recipe: Recipe) {
         editedRecipe.value?.let {
             if (it == recipe) {
@@ -47,7 +47,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         editedRecipe.value = emptyRecipe
     }
 
-    // Edit recipe
+    // Edit a recipe
     val navigateToEditRecipeFragEvent = SingleLiveEvent<Recipe>()
 
     fun edit(recipe: Recipe) {
@@ -59,9 +59,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
-    // Remove recipe
+    // Remove a recipe
     fun remove(recipeId: Long) = repository.removeById(recipeId)
 
-    // Make recipe Favorite
+    // Make a recipe Favorite
+    fun favorite(recipeId: Long) = repository.makeFavoriteById(recipeId)
 
 }

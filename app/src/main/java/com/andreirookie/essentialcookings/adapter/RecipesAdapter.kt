@@ -1,9 +1,11 @@
 package com.andreirookie.essentialcookings.adapter
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.R
@@ -26,6 +28,12 @@ internal class RecipesAdapter(
             recipeCategory.text = "(${recipe.category})"
             recipeAuthor.text = "by ${recipe.author}"
 
+            // Make Favorite
+            favoriteRecipeButton.isChecked = recipe.isFavorite
+            favoriteRecipeButton.setOnClickListener {
+                listener.onFavorite(recipe)
+            }
+
 
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -46,6 +54,12 @@ internal class RecipesAdapter(
                     }
                 }.show()
             }
+        }
+
+        @SuppressLint("SupportAnnotationUsage")
+        @DrawableRes
+        private fun getMakeFavoriteButtonIconResId(isFavorite: Boolean) {
+            if (isFavorite) R.drawable.ic_favorite_32 else R.drawable.ic_not_favorite_32
         }
 
     }

@@ -41,7 +41,7 @@
     app:layout_constraintTop_toTopOf="@id/recipe_icon"
     app:layout_constraintBottom_toTopOf="@id/recipe_category"
     app:layout_constraintStart_toEndOf="@id/recipe_icon"
-    app:layout_constraintEnd_toStartOf="@id/menu_button"
+    app:layout_constraintEnd_toStartOf="@id/favorite_recipe_button"
     android:contentDescription="Recipe title"
     />
 
@@ -86,10 +86,28 @@
         app:icon="@drawable/ic_menu_32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/recipe_icon"
-        app:layout_constraintStart_toEndOf="@id/recipe_title"
+        app:layout_constraintStart_toEndOf="@id/favorite_recipe_button"
         app:layout_constraintBottom_toBottomOf="@id/recipe_icon"
         app:rippleColor="@color/green_200"
         style="@style/Widget.App.Button.IconOnly"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/favorite_recipe_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        style="@style/Widget.AppTheme.MakeFavoriteButtonBox"
+        app:icon="@drawable/ic_favorite_button_32"
+        app:iconPadding="0dp"
+        android:background="@android:color/transparent"
+        android:layout_marginStart="@dimen/common_padding"
+        android:layout_marginTop="@dimen/common_padding"
+        android:layout_marginBottom="@dimen/common_padding"
+        app:layout_constraintStart_toEndOf="@id/recipe_title"
+        app:layout_constraintTop_toTopOf="@id/recipe_icon"
+        app:layout_constraintEnd_toStartOf="@id/menu_button"
+        app:layout_constraintBottom_toBottomOf="@id/recipe_icon"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
