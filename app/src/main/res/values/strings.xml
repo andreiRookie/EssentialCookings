@@ -2,9 +2,14 @@
     <string name="app_name" translatable="false">kooKings</string>
     <string name="remove"><i><b>Remove</b></i></string>
     <string name="edit"><i><b>Edit</b></i></string>
-    <string name="recipes"><i><b>Recipes</b></i></string>
-    <string name="favorites"><i><b>Favorites</b></i></string>
-    <string name="filters"><i><b>Filters</b></i></string>
+    <string name="recipe"><i><b>Recipe</b></i></string>
+
+    <!-- Bottom nav items-->
+    <string name="bottom_nav_recipes">Recipes</string>
+    <string name="bottom_nav_favorites">Favorites</string>
+    <string name="bottom_nav_filters">Filters</string>
+
+    <!-- NewEditRecipe fields-->
     <string name="edit_form_hint_title"><i>Title</i></string>
     <string name="edit_form_hint_category"><i>Category</i></string>
     <string name="edit_form_hint_author"><i>Author</i></string>

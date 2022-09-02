@@ -56,11 +56,11 @@ internal class RecipesAdapter(
             }
         }
 
-        @SuppressLint("SupportAnnotationUsage")
-        @DrawableRes
-        private fun getMakeFavoriteButtonIconResId(isFavorite: Boolean) {
-            if (isFavorite) R.drawable.ic_favorite_32 else R.drawable.ic_not_favorite_32
-        }
+//        @SuppressLint("SupportAnnotationUsage")
+//        @DrawableRes
+//        private fun getMakeFavoriteButtonIconResId(isFavorite: Boolean) {
+//            if (isFavorite) R.drawable.ic_favorite_32 else R.drawable.ic_not_favorite_32
+//        }
 
     }
 

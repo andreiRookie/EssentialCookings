@@ -22,16 +22,23 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         }
     }
     private val data = MutableLiveData(recipes)
+    override fun getAll(): LiveData<List<Recipe>> {
+        return data
+    }
 
+    // Favorites
+    private var favoriteRecipes = listOf<Recipe>()
+    private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
+    override fun getAllFavorites(): LiveData<List<Recipe>> {
+        return favoriteRecipesData
+    }
 
     // Drag & drop
     override fun swap(fromPosition: Int, toPosition: Int) {
         recipes = recipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
-    }
-
-    override fun getAll(): LiveData<List<Recipe>> {
-        return data
     }
 
     override fun makeFavoriteById(recipeId: Long) {
@@ -42,11 +49,15 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                     else it.copy(isFavorite = !it.isFavorite)
                 }
         }
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
     }
 
     override fun removeById(recipeId: Long) {
         recipes = recipes.filter { it.id != recipeId }
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
     }
 
@@ -67,6 +78,8 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                 category = recipe.category,
                 author = recipe.author)
         }
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
     }
 

@@ -7,7 +7,6 @@ import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.data.RecipeRepository
 import com.andreirookie.essentialcookings.data.RecipeRepositoryInMemoryImpl
 import com.andreirookie.essentialcookings.util.SingleLiveEvent
-import java.util.*
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -24,11 +23,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     val data = repository.getAll()
 
+    // Show only favorite recipes
+    val favoriteRecipesData = repository.getAllFavorites()
+
     // Drag & drop
     fun swap(fromPos: Int, toPos: Int) {
         repository.swap(fromPos, toPos)
     }
-
 
     // Add a Recipe
     val navigateToNewRecipeFragEvent = SingleLiveEvent<Unit>()
@@ -49,18 +50,16 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     // Edit a recipe
     val navigateToEditRecipeFragEvent = SingleLiveEvent<Recipe>()
-
     fun edit(recipe: Recipe) {
         editedRecipe.value = recipe
     }
-
     fun editRecipe(recipe: Recipe) {
         navigateToEditRecipeFragEvent.value = recipe
     }
 
-
     // Remove a recipe
     fun remove(recipeId: Long) = repository.removeById(recipeId)
+
 
     // Make a recipe Favorite
     fun favorite(recipeId: Long) = repository.makeFavoriteById(recipeId)

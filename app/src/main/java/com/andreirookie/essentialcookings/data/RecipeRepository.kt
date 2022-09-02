@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 interface RecipeRepository {
 
     // Drag & drop
-    fun swap(fp: Int, tp: Int)
+    fun swap(fromPosition: Int, toPosition: Int)
 
     fun getAll(): LiveData<List<Recipe>>
 
@@ -14,5 +14,8 @@ interface RecipeRepository {
     fun removeById(recipeId: Long)
 
     fun saveRecipe(recipe: Recipe)
+
+    // Favorite recipes
+    fun getAllFavorites(): LiveData<List<Recipe>>
 
 }
