@@ -24,8 +24,8 @@
     <fragment
         android:id="@+id/fragmentFilters"
         android:name="com.andreirookie.essentialcookings.FiltersFragment"
-        android:label="@string/bottom_nav_filters"
-        tools:layout="@layout/fragment_filters" >
+        android:label="@string/bottom_nav_filter"
+        tools:layout="@layout/fragment_filter" >
 
     </fragment>
 

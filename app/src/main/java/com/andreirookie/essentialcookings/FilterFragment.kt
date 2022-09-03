@@ -34,7 +34,7 @@ class FiltersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filters, container, false)
+        return inflater.inflate(R.layout.fragment_filter, container, false)
     }
 
     companion object {

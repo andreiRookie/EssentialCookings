@@ -91,6 +91,25 @@ class RecipeFeedFragment : Fragment() {
 
     }
 
+//      нерабочая схема
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+//        bottomNav?.setOnItemSelectedListener{
+//            when (it.itemId) {
+//                R.id.fragmentFeed -> true
+//                R.id.fragmentFavorites -> {
+//                    viewModel.showFavoriteRecipes() >> (repository.showFavorite,  SingleLiveEvent... etc)
+//                 true
+//                }
+//                R.id.fragmentFilter -> true
+//                else -> false
+//            }
+//        }
+//
+//    }
+
 
     // Drag & drop
 //    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
