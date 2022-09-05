@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="common_padding">16dp</dimen>
-    <dimen name="common_margin">8dp</dimen>
-    <dimen name="min_margin">4dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="icon_button_min_size">32dp</dimen>
+    <dimen name="common_padding_16dp">16dp</dimen>
+    <dimen name="min_padding_14dp">14dp</dimen>
+    <dimen name="common_margin_8dp">8dp</dimen>
+    <dimen name="min_margin_4dp">4dp</dimen>
+    <dimen name="fab_margin_16dp">16dp</dimen>
+    <dimen name="icon_button_min_size_32dp">32dp</dimen>
+    <dimen name="new_recipe_form_size_68dp">68dp</dimen>
 </resources>

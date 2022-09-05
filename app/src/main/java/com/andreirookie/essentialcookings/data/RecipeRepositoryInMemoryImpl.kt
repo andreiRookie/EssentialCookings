@@ -14,7 +14,7 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
             val recipe = Recipe(
                 id = uniqueId + 1L,
                 title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
-                category = "Русская кухня",
+                category = Cuisine.RUSSIAN.title,
                 author = "Андрей",
             )
             uniqueId++

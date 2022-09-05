@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/fragmentNewEditRecipe"
         android:name="com.andreirookie.essentialcookings.NewRecipeFragment"
-        android:label="kooK It"
+        android:label="kook It"
         tools:layout="@layout/fragment_new_edit_recipe"  />
 
 </navigation>
