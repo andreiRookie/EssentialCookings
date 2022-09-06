@@ -25,6 +25,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     // Show only favorite recipes
     val favoriteRecipesData = repository.getAllFavorites()
+    // Make a recipe Favorite
+    fun favorite(recipeId: Long) = repository.makeFavoriteById(recipeId)
 
     // Drag & drop
     fun swap(fromPos: Int, toPos: Int) {
@@ -61,7 +63,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun remove(recipeId: Long) = repository.removeById(recipeId)
 
 
-    // Make a recipe Favorite
-    fun favorite(recipeId: Long) = repository.makeFavoriteById(recipeId)
+    // Filter by category
+    fun filter(category: String) {
+        repository.applyFilterByCategory(category)
+    }
+    fun cancelFilter(category: String) {
+        repository.cancelFilterByCategory(category)
+    }
 
 }

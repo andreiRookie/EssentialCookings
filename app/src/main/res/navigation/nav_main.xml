@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_recipe_separate" />
     <fragment
         android:id="@+id/fragmentFilters"
-        android:name="com.andreirookie.essentialcookings.FiltersFragment"
+        android:name="com.andreirookie.essentialcookings.FilterFragment"
         android:label="@string/bottom_nav_filter"
         tools:layout="@layout/fragment_filter" >
 

@@ -10,11 +10,11 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     private var recipes = listOf<Recipe>()
     init {
-        repeat(10) {
+        repeat(5) {
             val recipe = Recipe(
                 id = uniqueId + 1L,
                 title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
-                category = Cuisine.RUSSIAN.title,
+                category = Cuisines.RUSSIAN.title,
                 author = "Андрей",
             )
             uniqueId++
@@ -33,9 +33,16 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         return favoriteRecipesData
     }
 
+    // Filter by category
+    private var notFilteredByCategoryRecipes = recipes
+
     // Drag & drop
     override fun swap(fromPosition: Int, toPosition: Int) {
         recipes = recipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+
+        // Filter by category
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
@@ -49,6 +56,15 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                     else it.copy(isFavorite = !it.isFavorite)
                 }
         }
+        // Filter by category
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
+            if (it.id != recipeId) it else
+                run {
+                    if (it.isFavorite) it.copy(isFavorite = !it.isFavorite)
+                    else it.copy(isFavorite = !it.isFavorite)
+                }
+        }
+
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
@@ -56,6 +72,10 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     override fun removeById(recipeId: Long) {
         recipes = recipes.filter { it.id != recipeId }
+
+        // Filter by category
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.filter { it.id != recipeId }
+
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
@@ -71,6 +91,16 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                     author = recipe.author
                 )
             ) + recipes
+
+            //  Filter by category
+            notFilteredByCategoryRecipes = listOf(
+                recipe.copy(
+                    id = ++uniqueId,
+                    title = "${uniqueId}: ${recipe.title}",
+                    category = recipe.category,
+                    author = recipe.author
+                )
+            ) + notFilteredByCategoryRecipes
         }
         recipes = recipes.map {
             if (it.id != recipe.id) it else it.copy(
@@ -78,6 +108,30 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                 category = recipe.category,
                 author = recipe.author)
         }
+        // Filter by category
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
+            if (it.id != recipe.id) it else it.copy(
+                title = recipe.title,
+                category = recipe.category,
+                author = recipe.author)
+        }
+
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
+        data.value = recipes
+    }
+
+    // Filter by category
+    override fun applyFilterByCategory(category: String) {
+        recipes = recipes.filter { it.category != category }
+
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
+        data.value = recipes
+    }
+    override fun cancelFilterByCategory(category: String) {
+        recipes = recipes + notFilteredByCategoryRecipes.filter { it.category == category }
+
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes

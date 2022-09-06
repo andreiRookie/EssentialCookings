@@ -26,6 +26,13 @@
         <item>Russian cuisine</item>
     </string-array>
 
+    <string name="american">American cuisine</string>
+    <string name="asian">Asian cuisine</string>
+    <string name="eastern">Eastern cuisine</string>
+    <string name="european">European cuisine</string>
+    <string name="mediterranean">Mediterranean cuisine</string>
+    <string name="pan_asian">Pan-Asian cuisine</string>
+    <string name="russian">Russian cuisine</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

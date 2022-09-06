@@ -32,13 +32,10 @@ class FavoritesFragment : Fragment() {
         val adapter = RecipesAdapter(object : OnInteractionListener {
             override fun onRemove(recipe: Recipe) {
                 viewModel.remove(recipeId =recipe.id)
-
             }
-
             override fun onEdit(recipe: Recipe) {
                 viewModel.edit(recipe)
             }
-
             override fun onFavorite(recipe: Recipe) {
                 viewModel.favorite(recipe.id)
             }

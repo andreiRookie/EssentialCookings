@@ -18,4 +18,8 @@ interface RecipeRepository {
     // Favorite recipes
     fun getAllFavorites(): LiveData<List<Recipe>>
 
+    // Filter
+    fun applyFilterByCategory(category: String)
+    fun cancelFilterByCategory(category: String)
+
 }

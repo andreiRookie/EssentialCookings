@@ -1,6 +1,6 @@
 package com.andreirookie.essentialcookings.data
 
-enum class Cuisine(val title: String) {
+enum class Cuisines(val title: String) {
     EUROPEAN("European cuisine"),
     ASIAN("Asian cuisine"),
     PANASIAN("Pan-Asian cuisine"),
