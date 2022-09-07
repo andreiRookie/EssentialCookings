@@ -16,8 +16,9 @@
 
     <ImageView
         android:id="@+id/recipe_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:foregroundGravity="fill"
         android:src="@drawable/ic_recipe_item_48"
         android:layout_marginStart="@dimen/common_padding_16dp"
         android:layout_marginTop="@dimen/common_padding_16dp"

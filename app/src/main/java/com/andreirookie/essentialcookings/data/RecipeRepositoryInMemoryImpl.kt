@@ -1,5 +1,6 @@
 package com.andreirookie.essentialcookings.data
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import java.util.*
@@ -131,6 +132,21 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
     override fun cancelFilterByCategory(category: String) {
         recipes = recipes + notFilteredByCategoryRecipes.filter { it.category == category }
+
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
+        data.value = recipes
+    }
+
+    // Add Image
+    override fun addMainImage(recipeId: Long, uri: Uri) {
+        recipes = recipes.map {
+            if (it.id != recipeId) it else it.copy(image = uri)
+        }
+        // Filter by category
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
+            if (it.id != recipeId) it else it.copy(image = uri)
+        }
 
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes

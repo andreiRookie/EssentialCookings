@@ -1,5 +1,6 @@
 package com.andreirookie.essentialcookings.data
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 
 interface RecipeRepository {
@@ -21,5 +22,8 @@ interface RecipeRepository {
     // Filter
     fun applyFilterByCategory(category: String)
     fun cancelFilterByCategory(category: String)
+
+    // Add main image
+    fun addMainImage(recipeId: Long, uri: Uri)
 
 }

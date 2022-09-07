@@ -8,4 +8,6 @@ interface OnInteractionListener {
     fun onFavorite(recipe:Recipe) {}
     fun onEdit(recipe: Recipe) {}
 
+    fun onAddImage(recipe: Recipe) {}
+
 }

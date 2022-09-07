@@ -1,6 +1,7 @@
 package com.andreirookie.essentialcookings.viewModel
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.andreirookie.essentialcookings.data.Recipe
@@ -69,6 +70,20 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
     fun cancelFilter(category: String) {
         repository.cancelFilterByCategory(category)
+    }
+
+    //Add image
+    val addingImageEvent = SingleLiveEvent<Recipe>()
+    val addingImageUriEvent = SingleLiveEvent<Uri>()
+    fun startAddingImage(recipe: Recipe) {
+        addingImageEvent.value = recipe
+    }
+    fun addImageUri(uri: Uri) {
+        addingImageUriEvent.value = uri
+    }
+    fun addImage(recipeId: Long, uri: Uri) {
+        println("viewModel.addImage(${recipeId}, $uri)")
+        repository.addMainImage(recipeId, uri)
     }
 
 }

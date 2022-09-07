@@ -1,10 +1,12 @@
 package com.andreirookie.essentialcookings
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +15,7 @@ import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBindi
 import com.andreirookie.essentialcookings.util.AppUtils.setCursorAtEndWithFocusAndShowKeyboard
 import com.andreirookie.essentialcookings.util.RecipeArg
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class NewRecipeFragment : Fragment() {
 
@@ -46,10 +49,11 @@ class NewRecipeFragment : Fragment() {
           //  binding.editCategory.setText(it.category)
             binding.autoCompleteTextView.setText(it.category)
             binding.editAuthor.setText(it.author)
-
+            binding.imageEditView.setImageURI(it.image)
         }
         val id = arguments?.recipeArg?.id
         println("val id =  ${arguments?.recipeArg?.id}")
+
 
         binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
@@ -79,6 +83,8 @@ class NewRecipeFragment : Fragment() {
             }
             findNavController().navigateUp()
         }
+
+
 
 
         return binding.root

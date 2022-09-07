@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +18,7 @@ import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentFavoritesBinding
 import com.andreirookie.essentialcookings.dragAndDrop.ItemTouchHelperSimpleCallback
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class FavoritesFragment : Fragment() {
 
@@ -38,6 +40,9 @@ class FavoritesFragment : Fragment() {
             }
             override fun onFavorite(recipe: Recipe) {
                 viewModel.favorite(recipe.id)
+            }
+            override fun onAddImage(recipe: Recipe) {
+                viewModel.startAddingImage(recipe)
             }
         })
         binding.fragmentFavoritesLayout.feedBackground.setImageResource(R.drawable.favorites_feed_background)
@@ -75,6 +80,27 @@ class FavoritesFragment : Fragment() {
                 Bundle().apply { recipeArg = it }
             )
         }
+
+        // Add image
+        val addingImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri ?: return@registerForActivityResult
+            Snackbar.make(binding.root, "Image added", Snackbar.LENGTH_SHORT).show()
+
+            viewModel.addImageUri(uri)
+        }
+        var mRecipe : Recipe? = null
+        viewModel.addingImageEvent.observe(viewLifecycleOwner) {recipe ->
+            mRecipe = recipe
+            println("addingImageEvent.observe $recipe")
+//            addingImageLauncher.launch(arrayOf("*/jpeg", "*/jpg","*/png"))
+//            addingImageLauncher.launch(arrayOf("images/*"))
+            addingImageLauncher.launch(arrayOf("*/*"))
+        }
+        viewModel.addingImageUriEvent.observe(viewLifecycleOwner) {uri ->
+            println("viewModel.addImage(${mRecipe?.id}, $uri)")
+            mRecipe?.let { viewModel.addImage(it.id, uri) }
+        }
+
         return binding.root
 
     }

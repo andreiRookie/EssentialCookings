@@ -27,6 +27,7 @@ internal class RecipesAdapter(
             recipeTitle.text = recipe.title
             recipeCategory.text = "(${recipe.category})"
             recipeAuthor.text = "by ${recipe.author}"
+            recipeIcon.setImageURI(recipe.image)
 
             // Make Favorite
             favoriteRecipeButton.isChecked = recipe.isFavorite
@@ -47,6 +48,10 @@ internal class RecipesAdapter(
                             }
                             R.id.edit -> {
                                 listener.onEdit(recipe)
+                                true
+                            }
+                            R.id.add_image -> {
+                                listener.onAddImage(recipe)
                                 true
                             }
                             else -> false
