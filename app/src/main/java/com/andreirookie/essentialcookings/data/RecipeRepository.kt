@@ -24,6 +24,6 @@ interface RecipeRepository {
     fun cancelFilterByCategory(category: String)
 
     // Add main image
-    fun addMainImage(recipeId: Long, uri: Uri)
+    fun addMainImage(recipeId: Long, uri: String)
 
 }

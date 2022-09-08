@@ -1,11 +1,11 @@
 package com.andreirookie.essentialcookings.adapter
 
 
-import android.annotation.SuppressLint
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.annotation.DrawableRes
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.R
@@ -27,7 +27,7 @@ internal class RecipesAdapter(
             recipeTitle.text = recipe.title
             recipeCategory.text = "(${recipe.category})"
             recipeAuthor.text = "by ${recipe.author}"
-            recipeIcon.setImageURI(recipe.image)
+            recipeIcon.setImageURI(recipe.image?.toUri())
 
             // Make Favorite
             favoriteRecipeButton.isChecked = recipe.isFavorite

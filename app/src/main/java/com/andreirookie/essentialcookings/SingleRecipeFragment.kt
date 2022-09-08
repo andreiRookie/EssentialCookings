@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.databinding.FragmentSingleRecipeBinding
@@ -29,7 +30,7 @@ class SingleRecipeFragment : Fragment() {
             binding.titleTextView.text = it.title
             binding.categoryTextView.text= "(${it.category})"
             binding.authorTextView.text = "by ${it.author}"
-            binding.singleRecipeIcon.setImageURI(it.image)
+            binding.singleRecipeIcon.setImageURI(it.image?.toUri())
         }
 
 

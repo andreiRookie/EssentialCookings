@@ -1,9 +1,14 @@
 package com.andreirookie.essentialcookings
 
+import android.app.Activity
+import android.content.Intent
+import android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -92,18 +97,33 @@ class RecipeFeedFragment : Fragment() {
         }
 
         // Add image
+        // !?!?Caused by: java.lang.SecurityException: Permission Denial: opening provider com.android.providers.downloads.DownloadStorageProvider from ProcessRecord{7ea4b52 21522:com.andreirookie.essentialcookings/u0a157} (pid=21522, uid=10157) requires that you obtain access using ACTION_OPEN_DOCUMENT or related APIs
         val addingImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+
+            // !?!? -> solution
+            if (uri != null) {
+                requireActivity().contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+            // !?!?
+
             uri ?: return@registerForActivityResult
             Snackbar.make(binding.root, "Image added", Snackbar.LENGTH_LONG).show()
 
-            viewModel.addImageUri(uri)
+            viewModel.addImageUri(uri.toString())
         }
         var mRecipe : Recipe? = null
         viewModel.addingImageEvent.observe(viewLifecycleOwner) {recipe ->
             mRecipe = recipe
             println("addingImageEvent.observe $recipe")
+
+            // не подсвечивает/не дает выбрать картинкаи? толькл если */*
 //            addingImageLauncher.launch(arrayOf("*/jpeg", "*/jpg","*/png"))
 //            addingImageLauncher.launch(arrayOf("images/*"))
+            // в самом OpenDocunment() стоит .setType("*/*")
+
             addingImageLauncher.launch(arrayOf("*/*"))
         }
         viewModel.addingImageUriEvent.observe(viewLifecycleOwner) {uri ->
