@@ -55,8 +55,9 @@ class NewRecipeFragment : Fragment() {
             binding.imageEditView.setImageURI(it.image?.toUri())
         }
         val id = arguments?.recipeArg?.id
+        val isFavorite = arguments?.recipeArg?.isFavorite
         println("val id =  ${arguments?.recipeArg?.id}")
-
+        println("val isFavorite =  ${arguments?.recipeArg?.isFavorite}")
 
         binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
@@ -80,7 +81,8 @@ class NewRecipeFragment : Fragment() {
                     id = id ?: 0L,
                     title = title,
                     category = category,
-                    author = author)
+                    author = author,
+                    isFavorite = isFavorite ?: false)
 
                 hideKeyboard(binding.editTitle)
 

@@ -112,6 +112,7 @@ class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
             put(RecipeColumns.COLUMN_TITLE, recipe.title)
             put(RecipeColumns.COLUMN_CATEGORY, recipe.category)
             put(RecipeColumns.COLUMN_AUTHOR, recipe.author)
+            put(RecipeColumns.COLUMN_IS_FAVORITE, recipe.isFavorite)
             put(RecipeColumns.COLUMN_IMAGE, recipe.image)
         }
         val id = db.replace(RecipeColumns.TABLE, null, values)

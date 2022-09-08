@@ -43,7 +43,7 @@ class RecipeRepositorySQLiteImpl(
         // Filter by category
         notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {  Collections.swap(this,fromPosition,toPosition) }
 
-        //favoriteRecipes = recipes.filter { it.isFavorite }
+       // favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
     }
@@ -88,7 +88,7 @@ class RecipeRepositorySQLiteImpl(
     }
 
     override fun saveRecipe(recipe: Recipe) {
-
+        
         val saved = dao.saveRecipe(recipe)
 
         recipes = if (recipe.id == 0L) {
