@@ -44,6 +44,9 @@ class FavoritesFragment : Fragment() {
             override fun onAddImage(recipe: Recipe) {
                 viewModel.startAddingImage(recipe)
             }
+
+            override fun onBinding(recipe: Recipe) {
+                viewModel.navigateToSingleRecipeFragment(recipe)            }
         })
         binding.fragmentFavoritesLayout.feedBackground.setImageResource(R.drawable.favorites_feed_background)
         binding.fragmentFavoritesLayout.addRecipeFab.visibility = View.GONE
@@ -99,6 +102,17 @@ class FavoritesFragment : Fragment() {
         viewModel.addingImageUriEvent.observe(viewLifecycleOwner) {uri ->
             println("viewModel.addImage(${mRecipe?.id}, $uri)")
             mRecipe?.let { viewModel.addImage(it.id, uri) }
+        }
+
+        //Single Recipe Fragment
+        viewModel.navigateToSingleRecipeFragmentEvent.observe(viewLifecycleOwner) {
+            val navHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+
+            navHostFragment.navController.navigate(
+                R.id.action_fragmentFavorites_to_singleRecipeFragment,
+                Bundle().apply { recipeArg = it }
+            )
         }
 
         return binding.root

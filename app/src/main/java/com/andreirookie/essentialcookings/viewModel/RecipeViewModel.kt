@@ -86,4 +86,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         repository.addMainImage(recipeId, uri)
     }
 
+    // Single Recipe Fragment
+    val navigateToSingleRecipeFragmentEvent = SingleLiveEvent<Recipe>()
+    fun navigateToSingleRecipeFragment(recipe: Recipe) {
+        navigateToSingleRecipeFragmentEvent.value = recipe
+    }
+
 }

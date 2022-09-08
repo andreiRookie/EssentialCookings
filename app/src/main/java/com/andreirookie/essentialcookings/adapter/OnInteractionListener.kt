@@ -10,4 +10,6 @@ interface OnInteractionListener {
 
     fun onAddImage(recipe: Recipe) {}
 
+    fun onBinding(recipe: Recipe)
+
 }

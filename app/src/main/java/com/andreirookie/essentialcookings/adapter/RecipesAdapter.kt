@@ -35,6 +35,11 @@ internal class RecipesAdapter(
                 listener.onFavorite(recipe)
             }
 
+            //Single Recipe Fragment
+            binding.root.setOnClickListener {
+                listener.onBinding(recipe)
+            }
+
 
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {

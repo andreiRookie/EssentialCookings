@@ -13,14 +13,17 @@
         <action
             android:id="@+id/action_fragmentFeed_to_fragmentNewEditRecipe"
             app:destination="@id/fragmentNewEditRecipe" />
+        <action
+            android:id="@+id/action_fragmentFeed_to_singleRecipeFragment"
+            app:destination="@id/fragmentSingleRecipe"/>
     </fragment>
 
 
     <fragment
-        android:id="@+id/fragmentRecipeSeparate"
-        android:name="com.andreirookie.essentialcookings.RecipeFragment"
-        android:label="@string/recipe"
-        tools:layout="@layout/fragment_recipe_separate" />
+        android:id="@+id/fragmentSingleRecipe"
+        android:name="com.andreirookie.essentialcookings.SingleRecipeFragment"
+        android:label="@string/single_recipe"
+        tools:layout="@layout/fragment_single_recipe" />
     <fragment
         android:id="@+id/fragmentFilters"
         android:name="com.andreirookie.essentialcookings.FilterFragment"
@@ -38,6 +41,9 @@
         <action
             android:id="@+id/action_fragmentFavorites_to_fragmentNewEditRecipe"
             app:destination="@id/fragmentNewEditRecipe" />
+        <action
+            android:id="@+id/action_fragmentFavorites_to_singleRecipeFragment"
+            app:destination="@id/fragmentSingleRecipe"/>
     </fragment>
 
     <fragment

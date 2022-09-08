@@ -9,7 +9,8 @@ data class Recipe(
     val category: String,
     val author: String,
     val isFavorite: Boolean = false,
-    val image: Uri? = null
+    val image: Uri? = null,
+    val steps: Array<Step>? = null
 //    val description: String
 //    val steps: String(array?? json??),
 
