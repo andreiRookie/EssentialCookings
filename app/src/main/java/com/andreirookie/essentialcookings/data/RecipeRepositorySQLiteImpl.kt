@@ -3,6 +3,7 @@ package com.andreirookie.essentialcookings.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreirookie.essentialcookings.db.RecipeDao
+import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 class RecipeRepositorySQLiteImpl(
@@ -37,17 +38,28 @@ class RecipeRepositorySQLiteImpl(
 
     // Drag & drop
     override fun swap(fromPosition: Int, toPosition: Int) {
-        recipes = recipes.apply {  Collections.swap(this,fromPosition,toPosition) }
-        favoriteRecipes = recipes.filter { it.isFavorite }
-        favoriteRecipes = favoriteRecipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+        try {
+            recipes = recipes.apply { Collections.swap(this, fromPosition, toPosition) }
 
-        // Filter by category
-        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+            favoriteRecipes =
+                favoriteRecipes.apply { Collections.swap(this, fromPosition, toPosition) }
+
+            // Filter by category
+            notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {
+                Collections.swap(
+                    this,
+                    fromPosition,
+                    toPosition
+                )
+            }
+        } catch (e: IndexOutOfBoundsException) {}
 
 //        favoriteRecipes = recipes.filter { it.isFavorite }
-        favoriteRecipesData.value = favoriteRecipes
-        data.value = recipes
+            favoriteRecipesData.value = favoriteRecipes
+            data.value = recipes
+
     }
+
 
     override fun makeFavoriteById(recipeId: Long) {
 

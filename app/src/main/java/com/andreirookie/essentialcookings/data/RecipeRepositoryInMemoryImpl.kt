@@ -3,6 +3,7 @@ package com.andreirookie.essentialcookings.data
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 class RecipeRepositoryInMemoryImpl : RecipeRepository {
@@ -39,12 +40,23 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     // Drag & drop
     override fun swap(fromPosition: Int, toPosition: Int) {
-        recipes = recipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+        try {
+            recipes = recipes.apply { Collections.swap(this, fromPosition, toPosition) }
 
-        // Filter by category
-        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {  Collections.swap(this,fromPosition,toPosition) }
+            favoriteRecipes =
+                favoriteRecipes.apply { Collections.swap(this, fromPosition, toPosition) }
 
-        favoriteRecipes = recipes.filter { it.isFavorite }
+            // Filter by category
+            notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.apply {
+                Collections.swap(
+                    this,
+                    fromPosition,
+                    toPosition
+                )
+            }
+        } catch (e: IndexOutOfBoundsException) {}
+
+//        favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
     }
