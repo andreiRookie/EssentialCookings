@@ -114,6 +114,11 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
                     author = recipe.author
                 )
             ) + notFilteredByCategoryRecipes
+
+            favoriteRecipes = recipes.filter { it.isFavorite }
+            favoriteRecipesData.value = favoriteRecipes
+            data.value = recipes
+            return
         }
         recipes = recipes.map {
             if (it.id != recipe.id) it else it.copy(

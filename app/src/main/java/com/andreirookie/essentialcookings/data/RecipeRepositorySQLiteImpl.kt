@@ -28,7 +28,11 @@ class RecipeRepositorySQLiteImpl(
     init {
         favoriteRecipes =recipes.filter { it.isFavorite }
     }
-    private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
+//    private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
+//    override fun getAllFavorites(): LiveData<List<Recipe>> {
+//        return favoriteRecipesData
+//    }
+    private val favoriteRecipesData = MutableLiveData(recipes.filter { it.isFavorite })
     override fun getAllFavorites(): LiveData<List<Recipe>> {
         return favoriteRecipesData
     }
@@ -55,7 +59,7 @@ class RecipeRepositorySQLiteImpl(
         } catch (e: IndexOutOfBoundsException) {}
 
 //        favoriteRecipes = recipes.filter { it.isFavorite }
-            favoriteRecipesData.value = favoriteRecipes
+            favoriteRecipesData.value = recipes.filter { it.isFavorite }
             data.value = recipes
 
     }

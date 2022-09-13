@@ -49,6 +49,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun changeAndSaveRecipe(recipe: Recipe) {
         editedRecipe.value?.let {
             if (it == recipe) {
+                editedRecipe.value = emptyRecipe
                 return
             }
             repository.saveRecipe(recipe)
@@ -95,6 +96,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val navigateToSingleRecipeFragmentEvent = SingleLiveEvent<Recipe>()
     fun navigateToSingleRecipeFragment(recipe: Recipe) {
         navigateToSingleRecipeFragmentEvent.value = recipe
+    }
+
+    fun cancelEditing() {
+        editedRecipe.value = emptyRecipe
     }
 
 }

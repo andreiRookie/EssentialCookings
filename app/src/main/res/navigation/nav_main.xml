@@ -50,6 +50,10 @@
         android:id="@+id/fragmentNewEditRecipe"
         android:name="com.andreirookie.essentialcookings.NewRecipeFragment"
         android:label="kook It"
-        tools:layout="@layout/fragment_new_edit_recipe"  />
+        tools:layout="@layout/fragment_new_edit_recipe"  >
+        <action
+            android:id="@+id/action_fragmentNewEditRecipe_to_fragmentFeed"
+            app:destination="@id/fragmentFeed" />
+    </fragment>
 
 </navigation>

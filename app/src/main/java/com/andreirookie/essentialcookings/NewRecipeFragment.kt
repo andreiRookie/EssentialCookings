@@ -1,16 +1,22 @@
 package com.andreirookie.essentialcookings
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.andreirookie.essentialcookings.activity.AppActivity
 import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBinding
 import com.andreirookie.essentialcookings.util.AppUtils
@@ -18,6 +24,7 @@ import com.andreirookie.essentialcookings.util.AppUtils.hideKeyboard
 import com.andreirookie.essentialcookings.util.AppUtils.setCursorAtEndWithFocusAndShowKeyboard
 import com.andreirookie.essentialcookings.util.RecipeArg
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 
 class NewRecipeFragment : Fragment() {
@@ -53,11 +60,12 @@ class NewRecipeFragment : Fragment() {
             binding.autoCompleteTextView.setText(it.category)
             binding.editAuthor.setText(it.author)
             binding.imageEditView.setImageURI(it.image?.toUri())
+
         }
+
         val id = arguments?.recipeArg?.id
         val isFavorite = arguments?.recipeArg?.isFavorite
-        println("val id =  ${arguments?.recipeArg?.id}")
-        println("val isFavorite =  ${arguments?.recipeArg?.isFavorite}")
+        var image= arguments?.recipeArg?.image
 
         binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
@@ -72,26 +80,59 @@ class NewRecipeFragment : Fragment() {
                 val category = binding.autoCompleteTextView.text.toString()
 //                val category = binding.editCategory.text.toString()
 
-
-                binding.editTitle.setText("")
-             //   binding.editCategory.setText("")
-                binding.editAuthor.setText("")
-
                 val recipe = Recipe(
                     id = id ?: 0L,
                     title = title,
                     category = category,
                     author = author,
-                    isFavorite = isFavorite ?: false)
+                    isFavorite = isFavorite ?: false,
+                    image = image
+                )
 
-                hideKeyboard(binding.editTitle)
-
+//                 binding.editTitle.setText("")
+//                   binding.editCategory.setText("")
+//                  binding.editAuthor.setText("")
                 viewModel.changeAndSaveRecipe(recipe)
+                binding.editTitle.clearFocus()
+                hideKeyboard(binding.editTitle)
             }
             findNavController().navigateUp()
         }
 
+        // Back pressed
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
 
+                override fun handleOnBackPressed() {
+                    viewModel.cancelEditing()
+                    findNavController().navigateUp()
+                }
+        })
+
+        //Add image
+        val addingImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+
+            // solution(Caused by: java.lang.SecurityException: Permission Denial)
+            if (uri != null) {
+                requireActivity().contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+
+            uri ?: return@registerForActivityResult
+            Snackbar.make(binding.root, "Image added", Snackbar.LENGTH_LONG).show()
+
+            Glide
+                .with(this)
+                .load(uri)
+                .into(binding.imageEditView)
+
+            image = uri.toString()
+        }
+        binding.imageEditButton.setOnClickListener {
+            addingImageLauncher.launch(arrayOf("*/*"))
+        }
 
 
         return binding.root

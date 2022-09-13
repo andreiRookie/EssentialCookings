@@ -83,17 +83,23 @@ class RecipeFeedFragment : Fragment() {
         // Edit recipe
         viewModel.editedRecipe.observe(viewLifecycleOwner) {
             if(it.id == 0L) return@observe
+            println("viewModel.editRecipe($it)")
             viewModel.editRecipe(it)
         }
         viewModel.navigateToEditRecipeFragEvent.observe(viewLifecycleOwner) {
-
-            val navHostFragment =
-                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-
-            navHostFragment.navController.navigate(
+            println(" viewModel.navigateToEditRecipeFragEvent.observe")
+            findNavController().navigate(
                 R.id.action_fragmentFeed_to_fragmentNewEditRecipe,
                 Bundle().apply { recipeArg = it }
             )
+
+//            val navHostFragment =
+//                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+//
+//            navHostFragment.navController.navigate(
+//                R.id.action_fragmentFeed_to_fragmentNewEditRecipe,
+//                Bundle().apply { recipeArg = it }
+//            )
         }
 
         // Add image
