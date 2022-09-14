@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.databinding.StepItemLayoutBinding
 
-class StepsAdapter : RecyclerView.Adapter<StepViewHolder>() {
+class StepsAdapter() : RecyclerView.Adapter<StepViewHolder>() {
 
     var stepsList = emptyList<Step>()
     set(value) {

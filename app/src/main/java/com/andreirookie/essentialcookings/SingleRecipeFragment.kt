@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.fragment.app.viewModels
 import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.databinding.FragmentSingleRecipeBinding
+import com.andreirookie.essentialcookings.steps.StepsAdapter
+import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 
 class SingleRecipeFragment : Fragment() {
 
@@ -17,6 +20,7 @@ class SingleRecipeFragment : Fragment() {
 //        super.onCreate(savedInstanceState)
 //
 //    }
+private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +28,6 @@ class SingleRecipeFragment : Fragment() {
     ): View? {
 
         val binding = FragmentSingleRecipeBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
 
         with(binding) {
             arguments?.recipeArg?.let {
@@ -34,8 +37,14 @@ class SingleRecipeFragment : Fragment() {
                 singleRecipeIcon.setImageURI(it.image?.toUri())
             }
         }
+        val recipeId = arguments?.recipeArg?.id ?: 0L
 
-        binding.stepsRecyclerView.adapter
+        //Steps
+        val adapter = StepsAdapter()
+        binding.stepsRecyclerView.recyclerView.adapter = adapter
+        viewModel.stepsData(recipeId).observe(viewLifecycleOwner) { thisRecipeStepsList ->
+            adapter.stepsList = thisRecipeStepsList
+        }
 
         return binding.root
     }

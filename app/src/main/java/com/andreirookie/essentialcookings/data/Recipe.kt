@@ -1,6 +1,5 @@
 package com.andreirookie.essentialcookings.data
 
-import android.net.Uri
 import com.andreirookie.essentialcookings.steps.Step
 import java.io.Serializable
 
@@ -12,7 +11,7 @@ data class Recipe(
     val isFavorite: Boolean = false,
     val image: String? = null,
 
-    val steps: List<Step>? = null
+    val steps: List<Step> = emptyList()
 
 
 //    val description: String

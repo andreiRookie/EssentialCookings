@@ -1,9 +1,9 @@
 package com.andreirookie.essentialcookings.steps
 
-import android.net.Uri
+import java.io.Serializable
 
 data class Step(
-    val id: Long,
+    //val id: Long,
     val content: String,
     val image: String? = null
-)
+) : Serializable

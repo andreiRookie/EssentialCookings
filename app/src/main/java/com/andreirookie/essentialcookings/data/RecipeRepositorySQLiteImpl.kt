@@ -3,6 +3,7 @@ package com.andreirookie.essentialcookings.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreirookie.essentialcookings.db.RecipeDao
+import com.andreirookie.essentialcookings.steps.Step
 import java.lang.IndexOutOfBoundsException
 import java.util.*
 
@@ -23,16 +24,16 @@ class RecipeRepositorySQLiteImpl(
 
     // Favorites
     //private var favoriteRecipes = recipes.filter { it.isFavorite }
-    //если без init - драг дроп не работает нормаьно в Favorites
+    //если без init - драг дроп не работает нормально в Favorites
     private var favoriteRecipes = listOf<Recipe>()
     init {
-        favoriteRecipes =recipes.filter { it.isFavorite }
+        favoriteRecipes = recipes.filter { it.isFavorite }
     }
 //    private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
 //    override fun getAllFavorites(): LiveData<List<Recipe>> {
 //        return favoriteRecipesData
 //    }
-    private val favoriteRecipesData = MutableLiveData(recipes.filter { it.isFavorite })
+    private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
     override fun getAllFavorites(): LiveData<List<Recipe>> {
         return favoriteRecipesData
     }
@@ -43,8 +44,8 @@ class RecipeRepositorySQLiteImpl(
     // Drag & drop
     override fun swap(fromPosition: Int, toPosition: Int) {
         try {
+            // синхронный своп
             recipes = recipes.apply { Collections.swap(this, fromPosition, toPosition) }
-
             favoriteRecipes =
                 favoriteRecipes.apply { Collections.swap(this, fromPosition, toPosition) }
 
@@ -58,8 +59,7 @@ class RecipeRepositorySQLiteImpl(
             }
         } catch (e: IndexOutOfBoundsException) {}
 
-//        favoriteRecipes = recipes.filter { it.isFavorite }
-            favoriteRecipesData.value = recipes.filter { it.isFavorite }
+            favoriteRecipesData.value = favoriteRecipes
             data.value = recipes
 
     }
@@ -157,6 +157,34 @@ class RecipeRepositorySQLiteImpl(
         // Filter by category
         notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
             if (it.id != recipeId) it else it.copy(image = uri)
+        }
+
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
+        data.value = recipes
+    }
+
+    //Steps
+    override fun getAllRecipeSteps(recipeId: Long): LiveData<List<Step>> {
+        val recipe = recipes.find {
+            it.id == recipeId
+        }
+        val steps = recipe?.steps ?: emptyList()
+        return MutableLiveData(steps)
+    }
+    override fun addStep(recipeId: Long, step: Step) {
+
+
+        recipes = recipes.map {
+            if (it.id != recipeId) it else it.copy(
+                steps = (listOf(step) + it.steps)
+            )
+        }
+
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
+            if (it.id != recipeId) it else it.copy(
+                steps = (listOf(step) + it.steps)
+            )
         }
 
         favoriteRecipes = recipes.filter { it.isFavorite }

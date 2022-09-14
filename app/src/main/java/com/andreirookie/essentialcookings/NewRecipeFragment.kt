@@ -1,27 +1,22 @@
 package com.andreirookie.essentialcookings
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.andreirookie.essentialcookings.activity.AppActivity
 import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBinding
-import com.andreirookie.essentialcookings.util.AppUtils
+import com.andreirookie.essentialcookings.steps.NewStepFragment.Companion.longArg
+import com.andreirookie.essentialcookings.steps.StepsAdapter
 import com.andreirookie.essentialcookings.util.AppUtils.hideKeyboard
-import com.andreirookie.essentialcookings.util.AppUtils.setCursorAtEndWithFocusAndShowKeyboard
 import com.andreirookie.essentialcookings.util.RecipeArg
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 import com.bumptech.glide.Glide
@@ -30,7 +25,6 @@ import com.google.android.material.snackbar.Snackbar
 class NewRecipeFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
-
 
     private var _binding: FragmentNewEditRecipeBinding? = null
     private val binding get() = _binding!!
@@ -60,14 +54,32 @@ class NewRecipeFragment : Fragment() {
             binding.autoCompleteTextView.setText(it.category)
             binding.editAuthor.setText(it.author)
             binding.imageEditView.setImageURI(it.image?.toUri())
-
         }
-
-        val id = arguments?.recipeArg?.id
-        val isFavorite = arguments?.recipeArg?.isFavorite
+        val id = arguments?.recipeArg?.id ?: 0L
+        val isFavorite = arguments?.recipeArg?.isFavorite ?: false
         var image= arguments?.recipeArg?.image
 
-        binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
+
+        //Steps
+        val adapter = StepsAdapter()
+        binding.stepsRecyclerView.recyclerView.adapter = adapter
+        viewModel.stepsData(id).observe(viewLifecycleOwner) { thisRecipeStepsList ->
+            adapter.stepsList = thisRecipeStepsList
+        }
+
+
+        // add step
+        binding.floatingButtonAddStep.setOnClickListener {
+            viewModel.startAddingStep(id)
+        }
+        viewModel.navigateToNewStepFragEvent.observe(viewLifecycleOwner) {
+            findNavController().navigate(
+                R.id.action_fragmentNewEditRecipe_to_fragmentNewStep,
+            Bundle().apply { longArg = it} )
+        }
+
+
+//        binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
 
         binding.floatingButtonSaveRecipe.setOnClickListener {
             if (!binding.editTitle.text.isNullOrBlank() &&
@@ -81,14 +93,13 @@ class NewRecipeFragment : Fragment() {
 //                val category = binding.editCategory.text.toString()
 
                 val recipe = Recipe(
-                    id = id ?: 0L,
+                    id = id,
                     title = title,
                     category = category,
                     author = author,
-                    isFavorite = isFavorite ?: false,
+                    isFavorite = isFavorite,
                     image = image
                 )
-
 //                 binding.editTitle.setText("")
 //                   binding.editCategory.setText("")
 //                  binding.editAuthor.setText("")
@@ -109,8 +120,8 @@ class NewRecipeFragment : Fragment() {
                 }
         })
 
-        //Add image
-        val addingImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        //Add main image
+        val addingMainImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
 
             // solution(Caused by: java.lang.SecurityException: Permission Denial)
             if (uri != null) {
@@ -131,7 +142,7 @@ class NewRecipeFragment : Fragment() {
             image = uri.toString()
         }
         binding.imageEditButton.setOnClickListener {
-            addingImageLauncher.launch(arrayOf("*/*"))
+            addingMainImageLauncher.launch(arrayOf("*/*"))
         }
 
 

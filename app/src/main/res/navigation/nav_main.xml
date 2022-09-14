@@ -54,6 +54,20 @@
         <action
             android:id="@+id/action_fragmentNewEditRecipe_to_fragmentFeed"
             app:destination="@id/fragmentFeed" />
+        <action
+            android:id="@+id/action_fragmentNewEditRecipe_to_fragmentNewStep"
+            app:destination="@id/fragmentNewStep" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentNewStep"
+        android:name="com.andreirookie.essentialcookings.steps.NewStepFragment"
+        android:label="New Step"
+        tools:layout="@layout/fragment_new_step_layout">
+
     </fragment>
 
 </navigation>
+
+
+

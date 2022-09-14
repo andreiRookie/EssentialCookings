@@ -15,6 +15,7 @@
     <string name="edit_form_hint_category"><b><i>Category</i></b></string>
     <string name="edit_form_hint_author"><b><i>Author</i></b></string>
     <string name="save_recipe_button_description">Save button</string>
+    <string name="add_step_button_text">Add\nStep</string>
 
     <!--Categories -->
     <string-array name="categories">

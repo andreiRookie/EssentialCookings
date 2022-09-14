@@ -1,8 +1,8 @@
 package com.andreirookie.essentialcookings.data
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.andreirookie.essentialcookings.steps.Step
 import java.lang.IndexOutOfBoundsException
 import java.util.*
 
@@ -168,6 +168,32 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         favoriteRecipes = recipes.filter { it.isFavorite }
         favoriteRecipesData.value = favoriteRecipes
         data.value = recipes
+    }
+
+    // Add step
+    override fun addStep(recipeId: Long, step: Step) {
+        recipes = recipes.map {
+            if (it.id != recipeId) it else it.copy(
+                steps = (listOf(step) + it.steps)
+            )
+        }
+
+        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
+            if (it.id != recipeId) it else it.copy(
+                steps = (listOf(step) + it.steps)
+            )
+        }
+
+        favoriteRecipes = recipes.filter { it.isFavorite }
+        favoriteRecipesData.value = favoriteRecipes
+        data.value = recipes
+    }
+    override fun getAllRecipeSteps(recipeId: Long): LiveData<List<Step>> {
+        val recipe = recipes.find {
+            it.id == recipeId
+        }
+        val steps = recipe?.steps ?: emptyList()
+        return MutableLiveData(steps)
     }
 
 }

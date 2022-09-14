@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-    android:layout_width="268dp"
-    android:layout_height="368dp"
+    android:layout_width="168dp"
+    android:layout_height="304dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="@dimen/min_margin_4dp"
     app:cardCornerRadius="@dimen/common_margin_8dp"
@@ -15,7 +15,7 @@
     <ImageView
         android:id="@+id/step_image"
         android:layout_width="match_parent"
-        android:layout_height="184dp"
+        android:layout_height="152dp"
         android:src="@drawable/pancakes"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,9 +26,10 @@
     <TextView
         android:id="@+id/step_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/min_margin_4dp"
+        android:layout_height="152dp"
+        android:layout_margin="@dimen/common_margin_8dp"
         android:text="Приготовить тесто для домашних блинчиков. В большой миске слегка взбить венчиком яйца с сахаром и солью. Не следует это делать слишком долго и тщательно: главное, чтобы ингредиенты только соединились."
+
         app:layout_constraintTop_toBottomOf="@id/step_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
