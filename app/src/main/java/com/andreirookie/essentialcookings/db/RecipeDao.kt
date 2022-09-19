@@ -7,8 +7,6 @@ import com.andreirookie.essentialcookings.steps.Step
 
 interface RecipeDao {
 
-    // Drag & drop
-//    fun swap(fromPosition: Int, toPosition: Int)
 
     fun getAll(): List<Recipe>
 
@@ -25,10 +23,13 @@ interface RecipeDao {
 //    fun addStep(recipeId: Long,step: Step)
 
     // Favorite recipes -
-// в БД не нужно т.к. используется для отображения на основе recipes
+//    в БД не нужно т.к. используется для отображения на основе recipes
 //    fun getAllFavorites(): List<Recipe>
 
-    // Filter
+    // Drag & drop??
+//    fun swap(fromPosition: Int, toPosition: Int)
+
+    // Filter???
 //    fun applyFilterByCategory(category: String)
 //    fun cancelFilterByCategory(category: String)
 

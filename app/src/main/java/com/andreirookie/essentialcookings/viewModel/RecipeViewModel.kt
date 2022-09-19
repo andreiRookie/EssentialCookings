@@ -113,13 +113,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 //    }
 
     // Add Step
-    val navigateToNewStepFragEvent = SingleLiveEvent<Long>()
-    fun startAddingStep(recipeId: Long) {
-        navigateToNewStepFragEvent.value = recipeId
-    }
-    fun addStep(recipeId: Long, step: Step) {
-        repository.addStep(recipeId, step)
-    }
+//    val navigateToNewStepFragEvent = SingleLiveEvent<Long>()
+//    fun startAddingStep(recipeId: Long) {
+//        navigateToNewStepFragEvent.value = recipeId
+//    }
+//    fun addStep(recipeId: Long, step: Step) {
+//        repository.addStep(recipeId, step)
+//    }
 
 
 }

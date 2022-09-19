@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.databinding.FragmentSingleRecipeBinding
+import com.andreirookie.essentialcookings.steps.StepViewModel
 import com.andreirookie.essentialcookings.steps.StepsAdapter
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 
@@ -20,7 +21,8 @@ class SingleRecipeFragment : Fragment() {
 //        super.onCreate(savedInstanceState)
 //
 //    }
-private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
+private val stepViewModel by viewModels<StepViewModel>(ownerProducer = ::requireParentFragment)
+    private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,8 @@ private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requirePa
         val adapter = StepsAdapter()
         binding.stepsRecyclerView.recyclerView.adapter = adapter
         viewModel.stepsData(recipeId).observe(viewLifecycleOwner) { thisRecipeStepsList ->
+            println("SINGLERECIPEFRAG viewModel.stepsData(id).observ $thisRecipeStepsList")
+
             adapter.stepsList = thisRecipeStepsList
         }
 

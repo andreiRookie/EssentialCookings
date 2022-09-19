@@ -57,7 +57,6 @@ class RecipeFeedFragment : Fragment() {
 
         binding.recipesRecyclerView.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
-            println("viewModel.data.observe: $recipes")
             adapter.submitList(recipes)
         }
 

@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.databinding.FragmentNewEditRecipeBinding
 import com.andreirookie.essentialcookings.steps.NewStepFragment.Companion.longArg
+import com.andreirookie.essentialcookings.steps.Step
+import com.andreirookie.essentialcookings.steps.StepViewModel
 import com.andreirookie.essentialcookings.steps.StepsAdapter
 import com.andreirookie.essentialcookings.util.AppUtils.hideKeyboard
 import com.andreirookie.essentialcookings.util.RecipeArg
@@ -25,6 +27,8 @@ import com.google.android.material.snackbar.Snackbar
 class NewRecipeFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
+    private val stepViewModel by viewModels<StepViewModel>(ownerProducer = ::requireParentFragment)
+
 
     private var _binding: FragmentNewEditRecipeBinding? = null
     private val binding get() = _binding!!
@@ -47,67 +51,39 @@ class NewRecipeFragment : Fragment() {
             categories)
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
+        val id = arguments?.recipeArg?.id ?: 0L
+        val isFavorite = arguments?.recipeArg?.isFavorite ?: false
+        var image= arguments?.recipeArg?.image ?: imageDraft
+        println("var image=  $image")
+//        var steps = arguments?.recipeArg?.steps ?: emptyList()
+        var steps = emptyList<Step>()
 
         arguments?.recipeArg?.let {
             binding.editTitle.setText(it.title)
-          //  binding.editCategory.setText(it.category)
+            //  binding.editCategory.setText(it.category)
             binding.autoCompleteTextView.setText(it.category)
             binding.editAuthor.setText(it.author)
-            binding.imageEditView.setImageURI(it.image?.toUri())
         }
-        val id = arguments?.recipeArg?.id ?: 0L
-        val isFavorite = arguments?.recipeArg?.isFavorite ?: false
-        var image= arguments?.recipeArg?.image
+        binding.imageEditView.setImageURI(image?.toUri())
 
 
         //Steps
         val adapter = StepsAdapter()
         binding.stepsRecyclerView.recyclerView.adapter = adapter
-        viewModel.stepsData(id).observe(viewLifecycleOwner) { thisRecipeStepsList ->
-            adapter.stepsList = thisRecipeStepsList
+        viewModel.stepsData(id).observe(viewLifecycleOwner) {
+            println("NEWRECIPEFRAG viewModel.stepsData(id).observ $it")
+            steps = stepViewModel.getTempSteps() + it
+            adapter.stepsList = steps
+
         }
-
-
         // add step
         binding.floatingButtonAddStep.setOnClickListener {
-            viewModel.startAddingStep(id)
+            stepViewModel.startAddingStep(id)
         }
-        viewModel.navigateToNewStepFragEvent.observe(viewLifecycleOwner) {
+        stepViewModel.navigateToNewStepFragEvent.observe(viewLifecycleOwner) {
             findNavController().navigate(
                 R.id.action_fragmentNewEditRecipe_to_fragmentNewStep,
             Bundle().apply { longArg = it} )
-        }
-
-
-//        binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
-
-        binding.floatingButtonSaveRecipe.setOnClickListener {
-            if (!binding.editTitle.text.isNullOrBlank() &&
-                !binding.autoCompleteTextView.text.isNullOrBlank() &&
-            //    !binding.editCategory.text.isNullOrBlank() &&
-                !binding.editAuthor.text.isNullOrBlank()
-            ) {
-                val title = binding.editTitle.text.toString()
-                val author =binding.editAuthor.text.toString()
-                val category = binding.autoCompleteTextView.text.toString()
-//                val category = binding.editCategory.text.toString()
-
-                val recipe = Recipe(
-                    id = id,
-                    title = title,
-                    category = category,
-                    author = author,
-                    isFavorite = isFavorite,
-                    image = image
-                )
-//                 binding.editTitle.setText("")
-//                   binding.editCategory.setText("")
-//                  binding.editAuthor.setText("")
-                viewModel.changeAndSaveRecipe(recipe)
-                binding.editTitle.clearFocus()
-                hideKeyboard(binding.editTitle)
-            }
-            findNavController().navigateUp()
         }
 
         // Back pressed
@@ -116,6 +92,8 @@ class NewRecipeFragment : Fragment() {
 
                 override fun handleOnBackPressed() {
                     viewModel.cancelEditing()
+                    stepViewModel.deleteTempSteps()
+                    imageDraft = null
                     findNavController().navigateUp()
                 }
         })
@@ -139,18 +117,58 @@ class NewRecipeFragment : Fragment() {
                 .load(uri)
                 .into(binding.imageEditView)
 
+            //binding.imageView пропадает после newStepFrag
+            // через companion object??
             image = uri.toString()
+            imageDraft = uri.toString()
         }
         binding.imageEditButton.setOnClickListener {
             addingMainImageLauncher.launch(arrayOf("*/*"))
         }
 
+//        binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
+
+        binding.floatingButtonSaveRecipe.setOnClickListener {
+            with(binding) {
+                if (!editTitle.text.isNullOrBlank() &&
+                    !autoCompleteTextView.text.isNullOrBlank() &&
+                    //    !editCategory.text.isNullOrBlank() &&
+                    !editAuthor.text.isNullOrBlank()
+                ) {
+                    val title = editTitle.text.toString()
+                    val author = editAuthor.text.toString()
+                    val category = autoCompleteTextView.text.toString()
+//                val category = binding.editCategory.text.toString()
+
+                    val recipe = Recipe(
+                        id = id,
+                        title = title,
+                        category = category,
+                        author = author,
+                        isFavorite = isFavorite,
+                        image = image,
+                        steps = steps
+                    )
+//                 binding.editTitle.setText("")
+//                   binding.editCategory.setText("")
+//                  binding.editAuthor.setText("")
+                    viewModel.changeAndSaveRecipe(recipe)
+                    editTitle.clearFocus()
+                    hideKeyboard(editTitle)
+                } else {
+                    viewModel.cancelEditing()
+                }
+            }
+            stepViewModel.deleteTempSteps()
+            imageDraft = null
+            findNavController().navigateUp()
+        }
+
 
         return binding.root
     }
-
-
-    //  to prevent caTEGORYdropdownmenu disappearing after fragment changing
+    
+    //  to prevent caTEGORYdropdownmenu disappearing after fragments changing
     override fun onResume() {
         super.onResume()
         val categories = resources.getStringArray(R.array.categories)
@@ -176,5 +194,7 @@ class NewRecipeFragment : Fragment() {
     companion object {
 
         var Bundle.recipeArg: Recipe by RecipeArg
+        //whole recipe draft??
+        var imageDraft: String? = null
     }
 }

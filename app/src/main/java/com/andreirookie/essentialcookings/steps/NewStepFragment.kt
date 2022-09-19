@@ -11,13 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreirookie.essentialcookings.databinding.FragmentNewStepLayoutBinding
 import com.andreirookie.essentialcookings.util.LongArg
-import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 
 class NewStepFragment : Fragment() {
 
-    private val vm by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
+    private val stepViewModel by viewModels<StepViewModel>(ownerProducer = ::requireParentFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +26,7 @@ class NewStepFragment : Fragment() {
         //): View? {
         val binding = FragmentNewStepLayoutBinding.inflate(inflater, container, false)
 
+        // id рецепта, если в step(...val recipeId:Long,..)
         val recipeId = arguments?.longArg ?: 0L
         var image = ""
 
@@ -60,16 +60,15 @@ class NewStepFragment : Fragment() {
                 val content = binding.editStepContent.text.toString()
 
                 val step = Step(
+//                    val recipeId:Long,
                     image = image,
                     content = content
                 )
 
-                vm.addStep(recipeId, step)
+                stepViewModel.saveStep(step)
             }
             findNavController().navigateUp()
         }
-
-
 
         return binding.root
     }

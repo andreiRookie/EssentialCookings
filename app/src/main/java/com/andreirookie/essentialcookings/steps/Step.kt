@@ -4,6 +4,7 @@ import java.io.Serializable
 
 data class Step(
     //val id: Long,
+    //val recipeId:Long,
     val content: String,
     val image: String? = null
 ) : Serializable
