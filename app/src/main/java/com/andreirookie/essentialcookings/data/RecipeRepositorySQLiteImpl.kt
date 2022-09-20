@@ -192,4 +192,16 @@ class RecipeRepositorySQLiteImpl(
         data.value = recipes
     }
 
+        // SSearch
+    override fun searchThroughTitle(query: String?) {
+        if (query != null) {
+            val foundRecipes = recipes.filter {
+                it.title.contains(query, ignoreCase = true) }
+            data.value = foundRecipes
+        } else {
+
+        data.value = recipes
+        }
+
+    }
 }

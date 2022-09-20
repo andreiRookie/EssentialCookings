@@ -5,13 +5,15 @@ import android.content.Intent
 import android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -127,7 +129,7 @@ class RecipeFeedFragment : Fragment() {
             // не подсвечивает/не дает выбрать картинкаи? толькл если */*
 //            addingImageLauncher.launch(arrayOf("*/jpeg", "*/jpg","*/png"))
 //            addingImageLauncher.launch(arrayOf("images/*"))
-            // в самом OpenDocunment() стоит .setType("*/*")
+            // в самом OpenDocument() стоит .setType("*/*")
 
             addingImageLauncher.launch(arrayOf("*/*"))
         }
@@ -153,7 +155,56 @@ class RecipeFeedFragment : Fragment() {
 
     }
 
-//      нерабочая схема
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // The usage of an interface lets you inject your own implementation
+        val menuHost: MenuHost = requireActivity()
+        // Add menu items without using the Fragment Menu APIs
+        // Note how we can tie the MenuProvider to the viewLifecycleOwner
+        // and an optional Lifecycle.State (here, RESUMED) to indicate when
+        // the menu should be visible
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.menu_search_button, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                return when (menuItem.itemId) {
+                    R.id.search_button -> {
+
+                        val searchView = menuItem.actionView as SearchView
+
+                        searchView.isSubmitButtonEnabled = false
+
+                        //через разметку не работает почему-то
+                        searchView.queryHint = getString(R.string.search_hint)
+
+                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                searchView.clearFocus()
+                                viewModel.search(query)
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                viewModel.search(newText)
+                                return false
+                            }
+
+                        })
+
+                        // clearCompletedTasks()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+//      нерабочая схема - BottomNavBar should be in AppActivity
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
 //

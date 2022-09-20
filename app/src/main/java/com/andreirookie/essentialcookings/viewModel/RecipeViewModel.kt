@@ -121,5 +121,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 //        repository.addStep(recipeId, step)
 //    }
 
+    // Search
+    fun search(query: String?) = repository.searchThroughTitle(query)
 
 }

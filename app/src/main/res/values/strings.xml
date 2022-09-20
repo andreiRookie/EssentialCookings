@@ -4,6 +4,7 @@
     <string name="edit"><i><b>Edit</b></i></string>
     <string name="add_image"><i><b>Add image</b></i></string>
     <string name="single_recipe"><i><b>kooKing</b></i></string>
+    <string name="search_hint">Enter a kooking...</string>
 
     <!-- Bottom nav items-->
     <string name="bottom_nav_recipes">Recipes</string>

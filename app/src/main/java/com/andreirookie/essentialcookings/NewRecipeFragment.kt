@@ -167,7 +167,7 @@ class NewRecipeFragment : Fragment() {
 
         return binding.root
     }
-    
+
     //  to prevent caTEGORYdropdownmenu disappearing after fragments changing
     override fun onResume() {
         super.onResume()

@@ -196,4 +196,16 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         return MutableLiveData(steps)
     }
 
+        //Search
+        override fun searchThroughTitle(query: String?) {
+            if (query != null) {
+                val foundRecipes = recipes.filter {
+                    it.title.contains(query, ignoreCase = true) }
+                data.value = foundRecipes
+            } else {
+
+                data.value = recipes
+            }
+
+        }
 }

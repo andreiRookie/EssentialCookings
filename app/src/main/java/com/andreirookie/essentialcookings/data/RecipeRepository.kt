@@ -31,5 +31,7 @@ interface RecipeRepository {
     fun getAllRecipeSteps(recipeId: Long): LiveData<List<Step>>
     fun addStep(recipeId: Long,step: Step)
 
+    // Search through title
+    fun searchThroughTitle(query: String?)
 
 }
