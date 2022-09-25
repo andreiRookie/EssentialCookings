@@ -25,8 +25,8 @@ internal class RecipesAdapter(
 
         fun bind(recipe: Recipe) = with(binding) {
             recipeTitle.text = recipe.title
-            recipeCategory.text = "(${recipe.category})"
-            recipeAuthor.text = "by ${recipe.author}"
+            recipeCategory.text = binding.root.context.getString(R.string.category, recipe.category)
+            recipeAuthor.text = binding.root.context.getString(R.string.author, recipe.author)
             recipeIcon.setImageURI(recipe.image?.toUri())
 
             // Make Favorite

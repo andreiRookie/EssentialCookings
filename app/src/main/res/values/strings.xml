@@ -6,6 +6,10 @@
     <string name="single_recipe"><i><b>kooKing</b></i></string>
     <string name="search_hint">Enter a kooking...</string>
 
+    <!-- templates for recipeAdapter -->
+    <string name="category">(%s)</string>
+    <string name="author">by %s</string>
+
     <!-- Bottom nav items-->
     <string name="bottom_nav_recipes">Recipes</string>
     <string name="bottom_nav_favorites">Favorites</string>

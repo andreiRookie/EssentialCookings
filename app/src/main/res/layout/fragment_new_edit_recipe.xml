@@ -170,8 +170,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/image_edit_form"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/add_step_form"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/steps_recycler_view"-->

@@ -34,8 +34,8 @@ private val stepViewModel by viewModels<StepViewModel>(ownerProducer = ::require
         with(binding) {
             arguments?.recipeArg?.let {
                 titleTextView.text = it.title
-                categoryTextView.text = "(${it.category})"
-                authorTextView.text = "by ${it.author}"
+                categoryTextView.text = binding.root.context.getString(R.string.category, it.category)
+                authorTextView.text = binding.root.context.getString(R.string.author, it.author)
                 singleRecipeIcon.setImageURI(it.image?.toUri())
             }
         }
