@@ -131,7 +131,9 @@ class RecipeFeedFragment : Fragment() {
 //            addingImageLauncher.launch(arrayOf("images/*"))
             // в самом OpenDocument() стоит .setType("*/*")
 
-            addingImageLauncher.launch(arrayOf("*/*"))
+            // - надо ("image/")!
+
+            addingImageLauncher.launch(arrayOf("image/*"))
         }
         viewModel.addingImageUriEvent.observe(viewLifecycleOwner) {uri ->
             println("viewModel.addImage(${mRecipe?.id}, $uri)")

@@ -52,7 +52,7 @@ class NewStepFragment : Fragment() {
             image = uri.toString()
         }
         binding.imageEditButton.setOnClickListener {
-            addingMainImageLauncher.launch(arrayOf("*/*"))
+            addingMainImageLauncher.launch(arrayOf("image/*"))
         }
 
         binding.floatingButtonSaveStep.setOnClickListener {

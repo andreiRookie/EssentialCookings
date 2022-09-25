@@ -44,17 +44,17 @@ class NewRecipeFragment : Fragment() {
 
         _binding =  FragmentNewEditRecipeBinding.inflate(inflater,container, false)
 
-        // Categories dropdown menu
-        val categories = resources.getStringArray(R.array.categories)
-        val arrayAdapter = ArrayAdapter(requireContext(),
-            R.layout.category_dropdown_item,
-            categories)
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        // Categories dropdown menu достаточно оставить в onResume
+        // в onViewCreated не будет вызываться при возврате на фрагмент
+//        val categories = resources.getStringArray(R.array.categories)
+//        val arrayAdapter = ArrayAdapter(requireContext(),
+//            R.layout.category_dropdown_item,
+//            categories)
+//        binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
         val id = arguments?.recipeArg?.id ?: 0L
         val isFavorite = arguments?.recipeArg?.isFavorite ?: false
         var image= arguments?.recipeArg?.image ?: imageDraft
-        println("var image=  $image")
 //        var steps = arguments?.recipeArg?.steps ?: emptyList()
         var steps = emptyList<Step>()
 
@@ -123,7 +123,7 @@ class NewRecipeFragment : Fragment() {
             imageDraft = uri.toString()
         }
         binding.imageEditButton.setOnClickListener {
-            addingMainImageLauncher.launch(arrayOf("*/*"))
+            addingMainImageLauncher.launch(arrayOf("image/*"))
         }
 
 //        binding.editTitle.setCursorAtEndWithFocusAndShowKeyboard()
