@@ -1,14 +1,10 @@
 package com.andreirookie.essentialcookings
 
-import android.app.Activity
 import android.content.Intent
-import android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,12 +16,12 @@ import com.andreirookie.essentialcookings.NewRecipeFragment.Companion.recipeArg
 import com.andreirookie.essentialcookings.adapter.OnInteractionListener
 import com.andreirookie.essentialcookings.adapter.RecipesAdapter
 import com.andreirookie.essentialcookings.data.Recipe
-import com.andreirookie.essentialcookings.databinding.FragmentFeedBinding
+import com.andreirookie.essentialcookings.databinding.FragmentFavoritesBinding
 import com.andreirookie.essentialcookings.dragAndDrop.ItemTouchHelperSimpleCallback
 import com.andreirookie.essentialcookings.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class RecipeFeedFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeViewModel>(ownerProducer = ::requireParentFragment)
 
@@ -34,7 +30,7 @@ class RecipeFeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View {
 
-        val binding = FragmentFeedBinding.inflate(inflater, container, false)
+        val binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         val adapter = RecipesAdapter(object : OnInteractionListener {
             override fun onRemove(recipe: Recipe) {
@@ -51,33 +47,26 @@ class RecipeFeedFragment : Fragment() {
             }
 
             override fun onBinding(recipe: Recipe) {
-                viewModel.navigateToSingleRecipeFragment(recipe)
-            }
+                viewModel.navigateToSingleRecipeFragment(recipe)            }
         })
+        binding.fragmentFavoritesLayout.feedBackground.setImageResource(R.drawable.favorites_feed_background)
+        binding.fragmentFavoritesLayout.addRecipeFab.visibility = View.GONE
 
-        binding.recipesRecyclerView.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { recipes ->
-            println("viewModel.data.observe: $recipes")
-            adapter.submitList(recipes)
+        binding.fragmentFavoritesLayout.recipesRecyclerView.adapter = adapter
+
+        // Show only favorites
+        viewModel.favoriteRecipesData.observe(viewLifecycleOwner) { favoriteRecipes ->
+            println("viewModel.favoriteRecipesData.observe: $favoriteRecipes")
+            adapter.submitList(favoriteRecipes)
         }
 
-
         // Prevent recyclerView's Item blinking
-        val simpleItemAnimator = binding.recipesRecyclerView.itemAnimator as SimpleItemAnimator
+        val simpleItemAnimator = binding.fragmentFavoritesLayout.recipesRecyclerView.itemAnimator as SimpleItemAnimator
         simpleItemAnimator.supportsChangeAnimations = false
 
         // Drag & drop
         val itemTouchHelper = ItemTouchHelper(ItemTouchHelperSimpleCallback(viewModel, adapter))
-        itemTouchHelper.attachToRecyclerView(binding.recipesRecyclerView)
-
-
-        // Add recipe
-        binding.addRecipeFab.setOnClickListener {
-            viewModel.addRecipe()
-        }
-        viewModel.navigateToNewRecipeFragEvent.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_fragmentFeed_to_fragmentNewEditRecipe)
-        }
+        itemTouchHelper.attachToRecyclerView(binding.fragmentFavoritesLayout.recipesRecyclerView)
 
 
         // Edit recipe
@@ -91,7 +80,7 @@ class RecipeFeedFragment : Fragment() {
                 activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
 
             navHostFragment.navController.navigate(
-                R.id.action_fragmentFeed_to_fragmentNewEditRecipe,
+                R.id.action_fragmentFavorites_to_fragmentNewEditRecipe,
                 Bundle().apply { recipeArg = it }
             )
         }
@@ -131,64 +120,18 @@ class RecipeFeedFragment : Fragment() {
             mRecipe?.let { viewModel.addImage(it.id, uri) }
         }
 
-
         //Single Recipe Fragment
         viewModel.navigateToSingleRecipeFragmentEvent.observe(viewLifecycleOwner) {
             val navHostFragment =
                 activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
 
             navHostFragment.navController.navigate(
-                R.id.action_fragmentFeed_to_singleRecipeFragment,
+                R.id.action_fragmentFavorites_to_singleRecipeFragment,
                 Bundle().apply { recipeArg = it }
-                )
+            )
         }
-
 
         return binding.root
 
     }
-
-//      нерабочая схема
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
-//        bottomNav?.setOnItemSelectedListener{
-//            when (it.itemId) {
-//                R.id.fragmentFeed -> true
-//                R.id.fragmentFavorites -> {
-//                    viewModel.showFavoriteRecipes() >> (repository.showFavorite,  SingleLiveEvent... etc)
-//                 true
-//                }
-//                R.id.fragmentFilter -> true
-//                else -> false
-//            }
-//        }
-//
-//    }
-
-
-    // Drag & drop
-//    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
-//        ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), 0
-//    ) {
-//        override fun onMove(
-//            recyclerView: RecyclerView,
-//            viewHolder: RecyclerView.ViewHolder,
-//            target: RecyclerView.ViewHolder
-//        ): Boolean {
-//            var fromPosition = viewHolder.absoluteAdapterPosition
-//            var toPosition = target.absoluteAdapterPosition
-//
-//            viewModel.swap(fromPosition,toPosition)
-//            recyclerView.adapter?.notifyItemMoved(fromPosition,toPosition)
-//            return true
-//        }
-//
-//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//            TODO("Not yet implemented")
-//        }
-//
-//    }
-
 }

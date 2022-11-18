@@ -7,4 +7,9 @@ interface OnInteractionListener {
     fun onRemove(recipe: Recipe) {}
     fun onFavorite(recipe:Recipe) {}
     fun onEdit(recipe: Recipe) {}
+
+    fun onAddImage(recipe: Recipe) {}
+
+    fun onBinding(recipe: Recipe)
+
 }

@@ -83,4 +83,6 @@ dependencies {
 
     def play_services_base_version = "18.1.0"
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
 }

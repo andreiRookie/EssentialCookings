@@ -1,8 +1,11 @@
 package com.andreirookie.essentialcookings.adapter
 
+
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andreirookie.essentialcookings.R
@@ -11,7 +14,7 @@ import com.andreirookie.essentialcookings.databinding.RecipeItemBinding
 
 internal class RecipesAdapter(
     private val interactionListener: OnInteractionListener
-): ListAdapter<Recipe, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallBack()) {
+) : ListAdapter<Recipe, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallBack()) {
 
 
 
@@ -22,8 +25,20 @@ internal class RecipesAdapter(
 
         fun bind(recipe: Recipe) = with(binding) {
             recipeTitle.text = recipe.title
-            recipeAuthor.text = recipe.author
-            recipeCategory.text = recipe.category
+            recipeCategory.text = "(${recipe.category})"
+            recipeAuthor.text = "by ${recipe.author}"
+            recipeIcon.setImageURI(recipe.image?.toUri())
+
+            // Make Favorite
+            favoriteRecipeButton.isChecked = recipe.isFavorite
+            favoriteRecipeButton.setOnClickListener {
+                listener.onFavorite(recipe)
+            }
+
+            //Single Recipe Fragment
+            binding.root.setOnClickListener {
+                listener.onBinding(recipe)
+            }
 
 
             menuButton.setOnClickListener {
@@ -40,12 +55,22 @@ internal class RecipesAdapter(
                                 listener.onEdit(recipe)
                                 true
                             }
+                            R.id.add_image -> {
+                                listener.onAddImage(recipe)
+                                true
+                            }
                             else -> false
                         }
                     }
                 }.show()
             }
         }
+
+//        @SuppressLint("SupportAnnotationUsage")
+//        @DrawableRes
+//        private fun getMakeFavoriteButtonIconResId(isFavorite: Boolean) {
+//            if (isFavorite) R.drawable.ic_favorite_32 else R.drawable.ic_not_favorite_32
+//        }
 
     }
 
@@ -59,4 +84,5 @@ internal class RecipesAdapter(
         val recipe = getItem(position)
         holder.bind(recipe)
     }
+
 }

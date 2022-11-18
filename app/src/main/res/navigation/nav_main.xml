@@ -7,29 +7,49 @@
     <fragment
         android:id="@+id/fragmentFeed"
         android:name="com.andreirookie.essentialcookings.RecipeFeedFragment"
-        android:label="fragment_feed"
+        android:label="@string/bottom_nav_recipes"
         tools:layout="@layout/fragment_feed">
 
         <action
             android:id="@+id/action_fragmentFeed_to_fragmentNewEditRecipe"
             app:destination="@id/fragmentNewEditRecipe" />
+        <action
+            android:id="@+id/action_fragmentFeed_to_singleRecipeFragment"
+            app:destination="@id/fragmentSingleRecipe"/>
     </fragment>
+
+
     <fragment
-        android:id="@+id/fragmentRecipeSeparate"
-        android:name="com.andreirookie.essentialcookings.RecipeFragment"
-        android:label="fragment_recipe_separate"
-        tools:layout="@layout/fragment_recipe_separate" />
+        android:id="@+id/fragmentSingleRecipe"
+        android:name="com.andreirookie.essentialcookings.SingleRecipeFragment"
+        android:label="@string/single_recipe"
+        tools:layout="@layout/fragment_single_recipe" />
     <fragment
-        android:id="@+id/fragmentFilter"
+        android:id="@+id/fragmentFilters"
         android:name="com.andreirookie.essentialcookings.FilterFragment"
-        android:label="fragment_filter"
-        tools:layout="@layout/fragment_filter" />
+        android:label="@string/bottom_nav_filter"
+        tools:layout="@layout/fragment_filter" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentFavorites"
+        android:name="com.andreirookie.essentialcookings.FavoritesFragment"
+        android:label="@string/bottom_nav_favorites"
+        tools:layout="@layout/fragment_favorites" >
+
+        <action
+            android:id="@+id/action_fragmentFavorites_to_fragmentNewEditRecipe"
+            app:destination="@id/fragmentNewEditRecipe" />
+        <action
+            android:id="@+id/action_fragmentFavorites_to_singleRecipeFragment"
+            app:destination="@id/fragmentSingleRecipe"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentNewEditRecipe"
         android:name="com.andreirookie.essentialcookings.NewRecipeFragment"
-        android:label="fragmentNewEditRecipe"
-        tools:layout="@layout/fragment_new_edit_recipe"
-        />
+        android:label="kook It"
+        tools:layout="@layout/fragment_new_edit_recipe"  />
 
 </navigation>

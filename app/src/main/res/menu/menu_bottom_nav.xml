@@ -4,14 +4,14 @@
     <item
         android:id="@+id/fragmentFeed"
         android:icon="@drawable/ic_recipes_24"
-        android:title="@string/recipes"
+        android:title="@string/bottom_nav_recipes"
         />
     <item
-        android:id="@+id/fragmentFilter"
+        android:id="@+id/fragmentFilters"
         android:icon="@drawable/ic_filter_24"
-        android:title="@string/filter"/>
+        android:title="@string/bottom_nav_filter"/>
     <item
-        android:id="@+id/fragmentFavorite"
-        android:icon="@drawable/ic_favorite_24"
-        android:title="@string/favorite" />
+        android:id="@+id/fragmentFavorites"
+        android:icon="@drawable/ic_favorites_bottom_nav_24"
+        android:title="@string/bottom_nav_favorites" />
 </menu>

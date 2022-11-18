@@ -1,35 +1,33 @@
 package com.andreirookie.essentialcookings.data
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.andreirookie.essentialcookings.db.RecipeDao
 import java.lang.IndexOutOfBoundsException
 import java.util.*
 
-class RecipeRepositoryInMemoryImpl : RecipeRepository {
-
-    private var uniqueId = 0L
+class RecipeRepositorySQLiteImpl(
+    private val dao : RecipeDao
+) : RecipeRepository {
 
     private var recipes = listOf<Recipe>()
-    init {
-        repeat(5) {
-            val recipe = Recipe(
-                id = uniqueId + 1L,
-                title = "${uniqueId + 1}: блины такие блины сякие, эдакие",
-                category = Cuisines.RUSSIAN.title,
-                author = "Андрей",
-            )
-            uniqueId++
-            recipes += recipe
-        }
-    }
     private val data = MutableLiveData(recipes)
+    init {
+        recipes = dao.getAll()
+        data.value = recipes
+    }
+
     override fun getAll(): LiveData<List<Recipe>> {
         return data
     }
 
     // Favorites
+    //private var favoriteRecipes = recipes.filter { it.isFavorite }
+    //если без init - драг дроп не работает нормаьно в Favorites
     private var favoriteRecipes = listOf<Recipe>()
+    init {
+        favoriteRecipes =recipes.filter { it.isFavorite }
+    }
     private val favoriteRecipesData = MutableLiveData(favoriteRecipes)
     override fun getAllFavorites(): LiveData<List<Recipe>> {
         return favoriteRecipesData
@@ -57,11 +55,16 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
         } catch (e: IndexOutOfBoundsException) {}
 
 //        favoriteRecipes = recipes.filter { it.isFavorite }
-        favoriteRecipesData.value = favoriteRecipes
-        data.value = recipes
+            favoriteRecipesData.value = favoriteRecipes
+            data.value = recipes
+
     }
 
+
     override fun makeFavoriteById(recipeId: Long) {
+
+        dao.makeFavoriteById(recipeId)
+
         recipes = recipes.map {
             if (it.id != recipeId) it else
                 run {
@@ -84,6 +87,9 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
 
     override fun removeById(recipeId: Long) {
+
+        dao.removeById(recipeId)
+
         recipes = recipes.filter { it.id != recipeId }
 
         // Filter by category
@@ -95,38 +101,24 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
     }
 
     override fun saveRecipe(recipe: Recipe) {
-        if (recipe.id == 0L) {
-            recipes = listOf(
-                recipe.copy(
-                    id = ++uniqueId,
-                    title = "${uniqueId}: ${recipe.title}",
-                    category = recipe.category,
-                    author = recipe.author
-                )
-            ) + recipes
 
-            //  Filter by category
-            notFilteredByCategoryRecipes = listOf(
-                recipe.copy(
-                    id = ++uniqueId,
-                    title = "${uniqueId}: ${recipe.title}",
-                    category = recipe.category,
-                    author = recipe.author
-                )
-            ) + notFilteredByCategoryRecipes
+        val saved = dao.saveRecipe(recipe)
+
+        recipes = if (recipe.id == 0L) {
+            listOf(saved) + recipes
+        } else {
+            recipes.map {
+                if (it.id != recipe.id) it else saved
+            }
         }
-        recipes = recipes.map {
-            if (it.id != recipe.id) it else it.copy(
-                title = recipe.title,
-                category = recipe.category,
-                author = recipe.author)
-        }
-        // Filter by category
-        notFilteredByCategoryRecipes = notFilteredByCategoryRecipes.map {
-            if (it.id != recipe.id) it else it.copy(
-                title = recipe.title,
-                category = recipe.category,
-                author = recipe.author)
+
+        //  Filter by category
+        notFilteredByCategoryRecipes = if (recipe.id == 0L) {
+            listOf(saved) + notFilteredByCategoryRecipes
+        } else {
+            notFilteredByCategoryRecipes.map {
+                if (it.id != recipe.id) it else saved
+            }
         }
 
         favoriteRecipes = recipes.filter { it.isFavorite }
@@ -152,6 +144,9 @@ class RecipeRepositoryInMemoryImpl : RecipeRepository {
 
     // Add Image
     override fun addMainImage(recipeId: Long, uri: String) {
+
+        dao.addMainImage(recipeId, uri)
+
         recipes = recipes.map {
             if (it.id != recipeId) it else it.copy(image = uri)
         }
