@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="@dimen/min_margin_4dp"
+
+    app:cardElevation="@dimen/elevation_s"
+
     app:cardCornerRadius="@dimen/common_margin_8dp"
     android:layout_margin="@dimen/common_margin_8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">

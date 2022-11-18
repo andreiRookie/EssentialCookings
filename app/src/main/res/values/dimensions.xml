@@ -8,4 +8,10 @@
     <dimen name="icon_button_min_size_32dp">32dp</dimen>
     <dimen name="new_recipe_form_size_68dp">68dp</dimen>
     <dimen name="filter_item_size_24dp">24dp</dimen>
+
+    <!-- elevations -->
+    <dimen name="elevation_s">12dp</dimen>
+    <dimen name="elevation_m">24dp</dimen>
+    <dimen name="elevation_l">32dp</dimen>
+
 </resources>
