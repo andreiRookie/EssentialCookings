@@ -1,6 +1,8 @@
 package com.andreirookie.essentialcookings.activity
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -15,7 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
-    private val viewModel by viewModels<RecipeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class AppActivity : AppCompatActivity() {
             .setupWithNavController(navController)
 
 
+
         // Fragment names in AppBar
         val appBarConfig = AppBarConfiguration(setOf(
             R.id.fragmentFeed,
@@ -42,6 +44,21 @@ class AppActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfig)
 
-
+//        val actionBar = this.actionBar
+//        actionBar?.setDisplayHomeAsUpEnabled(false)
     }
+
+    // ActionBar back home button
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                Toast.makeText(this, "OnBAckPressed Works", Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

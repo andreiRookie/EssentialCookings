@@ -1,6 +1,6 @@
 package com.andreirookie.essentialcookings.data
 
-import android.net.Uri
+import com.andreirookie.essentialcookings.steps.Step
 import java.io.Serializable
 
 data class Recipe(
@@ -11,9 +11,11 @@ data class Recipe(
     val isFavorite: Boolean = false,
     val image: String? = null,
 
- //   val steps: Array<Step>? = null
+    val steps: List<Step> = emptyList()
+
+
 //    val description: String
-//    val steps: String(array?? json??),
+//    val steps: String(list?? array?? json??),
 
 )  : Serializable {
 }

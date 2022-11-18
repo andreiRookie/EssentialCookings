@@ -106,14 +106,8 @@ class FavoritesFragment : Fragment() {
         var mRecipe : Recipe? = null
         viewModel.addingImageEvent.observe(viewLifecycleOwner) {recipe ->
             mRecipe = recipe
-            println("addingImageEvent.observe $recipe")
 
-            // не подсвечивает/не дает выбрать картинкаи? толькл если */*
-//            addingImageLauncher.launch(arrayOf("*/jpeg", "*/jpg","*/png"))
-//            addingImageLauncher.launch(arrayOf("images/*"))
-            // в самом OpenDocunment() стоит .setType("*/*")
-
-            addingImageLauncher.launch(arrayOf("*/*"))
+            addingImageLauncher.launch(arrayOf("image/*"))
         }
         viewModel.addingImageUriEvent.observe(viewLifecycleOwner) {uri ->
             println("viewModel.addImage(${mRecipe?.id}, $uri)")

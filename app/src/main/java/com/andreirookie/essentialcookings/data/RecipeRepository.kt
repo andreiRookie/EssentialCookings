@@ -2,6 +2,7 @@ package com.andreirookie.essentialcookings.data
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
+import com.andreirookie.essentialcookings.steps.Step
 
 interface RecipeRepository {
 
@@ -25,5 +26,12 @@ interface RecipeRepository {
 
     // Add main image
     fun addMainImage(recipeId: Long, uri: String)
+
+    // steps
+    fun getAllRecipeSteps(recipeId: Long): LiveData<List<Step>>
+    fun addStep(recipeId: Long,step: Step)
+
+    // Search through title
+    fun searchThroughTitle(query: String?)
 
 }

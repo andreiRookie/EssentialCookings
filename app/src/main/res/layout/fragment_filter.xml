@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +25,7 @@
         android:backgroundTint="?attr/colorSecondary"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -56,7 +60,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintBottom_toTopOf="@id/eastern_filter_item_form"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -91,7 +96,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,6 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -126,7 +132,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -161,7 +168,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -186,6 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -196,7 +204,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,6 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
@@ -231,7 +240,7 @@
         android:layout_height="@dimen/new_recipe_form_size_68dp"
         app:cardElevation="@dimen/min_margin_4dp"
         app:cardCornerRadius="@dimen/common_margin_8dp"
-        android:layout_margin="@dimen/common_margin_8dp"
+        android:layout_marginHorizontal="@dimen/common_margin_8dp"
         android:backgroundTint="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -256,11 +265,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin_8dp"
             android:checked="true"
+            android:buttonTint="@color/green_700"
             android:layout_gravity="end|center"/>
 
     </androidx.cardview.widget.CardView>
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -3,12 +3,14 @@ package com.andreirookie.essentialcookings.viewModel
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreirookie.essentialcookings.data.Recipe
 import com.andreirookie.essentialcookings.data.RecipeRepository
 import com.andreirookie.essentialcookings.data.RecipeRepositoryInMemoryImpl
 import com.andreirookie.essentialcookings.data.RecipeRepositorySQLiteImpl
 import com.andreirookie.essentialcookings.db.AppDb
+import com.andreirookie.essentialcookings.steps.Step
 import com.andreirookie.essentialcookings.util.SingleLiveEvent
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -49,6 +51,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun changeAndSaveRecipe(recipe: Recipe) {
         editedRecipe.value?.let {
             if (it == recipe) {
+                editedRecipe.value = emptyRecipe
                 return
             }
             repository.saveRecipe(recipe)
@@ -96,5 +99,29 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun navigateToSingleRecipeFragment(recipe: Recipe) {
         navigateToSingleRecipeFragmentEvent.value = recipe
     }
+
+    fun cancelEditing() {
+        editedRecipe.value = emptyRecipe
+    }
+
+    //Steps
+    val stepsData = { recipeId: Long ->
+        repository.getAllRecipeSteps(recipeId)
+    }
+//    fun getRecipeStepsData(recipeId: Long) {
+//        repository.getAllRecipeSteps(recipeId)
+//    }
+
+    // Add Step
+//    val navigateToNewStepFragEvent = SingleLiveEvent<Long>()
+//    fun startAddingStep(recipeId: Long) {
+//        navigateToNewStepFragEvent.value = recipeId
+//    }
+//    fun addStep(recipeId: Long, step: Step) {
+//        repository.addStep(recipeId, step)
+//    }
+
+    // Search
+    fun search(query: String?) = repository.searchThroughTitle(query)
 
 }

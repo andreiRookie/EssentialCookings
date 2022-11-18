@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.andreirookie.essentialcookings.data.Recipe
+import com.andreirookie.essentialcookings.steps.Step
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
 
@@ -44,9 +47,8 @@ class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
 //        }
 //        return favoriteRecipes
 //    }
-
 //    override fun swap(fromPosition: Int, toPosition: Int) {
-//        TODO("Not yet implemented")
+//
 //    }
 
     override fun makeFavoriteById(recipeId: Long) {
@@ -114,6 +116,7 @@ class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
             put(RecipeColumns.COLUMN_AUTHOR, recipe.author)
             put(RecipeColumns.COLUMN_IS_FAVORITE, recipe.isFavorite)
             put(RecipeColumns.COLUMN_IMAGE, recipe.image)
+            put(RecipeColumns.COLUMN_STEPS, getStepsAsJson(recipe.steps))
         }
         val id = db.replace(RecipeColumns.TABLE, null, values)
         db.query(
@@ -131,11 +134,11 @@ class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
     }
 
 //    override fun applyFilterByCategory(category: String) {
-//        TODO("Not yet implemented")
+//       ??? TODO("Not yet implemented") ???
 //    }
 //
 //    override fun cancelFilterByCategory(category: String) {
-//        TODO("Not yet implemented")
+//      ???  TODO("Not yet implemented") ???
 //    }
 
     private fun map(cursor: Cursor): Recipe {
@@ -146,9 +149,24 @@ class RecipeDaoImpl(private val db: SQLiteDatabase) : RecipeDao {
                 category = getString(getColumnIndexOrThrow(RecipeColumns.COLUMN_CATEGORY)),
                 author = getString(getColumnIndexOrThrow(RecipeColumns.COLUMN_AUTHOR)),
                 isFavorite = getInt(getColumnIndexOrThrow(RecipeColumns.COLUMN_IS_FAVORITE)) != 0,
-                image = getString(getColumnIndexOrThrow(RecipeColumns.COLUMN_IMAGE))
-//                image = null
+                image = getString(getColumnIndexOrThrow(RecipeColumns.COLUMN_IMAGE)),
+                steps = getStepListFromJson(getString(getColumnIndexOrThrow(RecipeColumns.COLUMN_STEPS)))
             )
         }
+    }
+    // Steps
+    private val gson = Gson()
+    private val type = TypeToken.getParameterized(List::class.java, Step::class.java).type
+    private fun getStepsAsJson(steps: List<Step>): String {
+        println("getStepsAsJson: steps: $steps -  ${gson.toJson(steps)}")
+
+        return gson.toJson(steps)
+    }
+    private fun getStepListFromJson(stepsAsJson: String): List<Step> {
+        var steps: List<Step> = emptyList()
+        steps = gson.fromJson(stepsAsJson, type)
+        println("getStepListFromJson(stepsAsJson: $stepsAsJson")
+        println("getStepListFromJson $steps")
+        return steps
     }
 }
